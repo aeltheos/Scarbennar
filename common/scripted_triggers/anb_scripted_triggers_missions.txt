@@ -1314,6 +1314,7 @@ mission_faction_trigger = {
     }
 }
 
+<<<<<<< HEAD
 argordstun_roughness_100 = {
 	has_government_power = {
 		mechanic_type = argordstun_roughness_mechanic
@@ -1388,5 +1389,46 @@ thirabnir_mission = {
 	custom_trigger_tooltip = {
 		tooltip = thangoya_thirabnir_mission_tt
 		has_country_modifier = thangoya_thirabnir_ruler
+	}
+}
+
+# Ovdal Tungr
+F23_owned_by_friendly_nation = {
+	custom_trigger_tooltip = {
+		tooltip = F23_friendly_nation_owned_threshold_$trust_threshold$
+		owner = {
+			OR = {
+				tag = ROOT
+				overlord_of = ROOT
+				is_subject_of = ROOT
+				AND = {
+					alliance_with = ROOT
+					OR = {
+						tag = U17
+						trust = {
+							who = ROOT
+							value = $trust_threshold$
+						}
+					}
+				}
+				overlord = {
+					OR = {
+						is_subject_of = ROOT
+						alliance_with = ROOT
+						AND = {
+							alliance_with = ROOT
+							OR = {
+								tag = U17
+								trust = {
+									who = ROOT
+									value = $trust_threshold$
+								}
+							}
+						}
+						
+					}
+				}
+			}
+		}
 	}
 }
