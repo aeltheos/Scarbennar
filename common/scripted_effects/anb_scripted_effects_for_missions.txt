@@ -16482,3 +16482,522 @@ F23_shipyard_construction = {
 		}
 	}
 }
+
+F23_extending_our_reach_effect = {
+	random_trade_node_member_province = {
+		limit = {
+			has_terrain = coastline
+			F23_owned_by_friendly_nation = yes
+			has_shipyard_building_trigger = yes
+			num_free_building_slots = 1
+		}
+		if = {
+			limit = {
+				country_or_non_sovereign_subject_holds = F23
+			}
+			cede_province = F23
+			add_province_modifier = { name = F23_local_naval_base duration = -1 }
+			change_trade_goods = fish
+			add_building_construction = {
+				building = impressment_offices
+				speed = 0.5
+				cost = 0.5
+			}
+		}
+		else = {
+			add_province_modifier = { name = F23_local_naval_base duration = -1 }
+			change_trade_goods = fish
+			add_building_construction = {
+				building = impressment_offices
+				speed = 0.5
+				cost = 0.0
+			}
+			F23 = { add_treasury = -250 }
+		}
+	}
+}
+F23_seizing_the_sweetport_custom_effect = {
+	custom_tooltip = F23_seizing_the_sweetport_tt_2_$culture$
+	hidden_effect = {		
+		if = {
+			limit = {
+				any_known_country = { 
+					culture = $culture$ 
+					has_opinion = { who = ROOT value = 150 }
+				}
+			}
+			else = { add_dip_power = -50 }
+		}	
+	}
+}
+
+# Sea Hold effects
+# Country scope.
+F23_sea_hold_spawn = {
+	clr_country_flag = F23_sea_hold_docked_country
+
+	set_country_flag = F23_sea_hold_base
+	if = {
+		limit = { has_country_flag = F23_sea_hold_improved_battlements_enabled }
+		set_country_flag = F23_sea_hold_improved_battlements
+	}
+	if = {
+		limit = { has_country_flag = F23_sea_hold_mortar_bay_enabled }
+		set_country_flag = F23_sea_hold_mortar_bay
+	}
+	if = {
+		limit = { has_country_flag = F23_sea_hold_gyrocopter_bay_enabled }
+		set_country_flag = F23_sea_hold_gyrocopter_bay
+	}
+	if = {
+		limit = { has_country_flag = F23_sea_hold_floating_farms_enabled }
+		set_country_flag = F23_sea_hold_floating_farms
+	}
+	if = {
+		limit = { has_country_flag = F23_sea_hold_landing_bay_enabled }
+		set_country_flag = F23_sea_hold_landing_bay
+	}
+	if = {
+		limit = { check_variable = { which = F23_sea_hold_var_modifications_available value = 1 } }
+		set_country_flag = F23_sea_hold_filler_1
+	}
+	if = {
+		limit = { check_variable = { which = F23_sea_hold_var_modifications_available value = 2 } }
+		set_country_flag = F23_sea_hold_filler_2
+	}
+
+	set_country_flag = forbid_flagship_modification_flag_captains_log
+	set_country_flag = forbid_flagship_modification_flag_spare_jolly_roger
+	set_country_flag = forbid_flagship_modification_flag_flag_officers
+	set_country_flag = forbid_flagship_modification_flag_scandinavian_flag_officers
+	set_country_flag = forbid_flagship_modification_flag_portuguese_corps_of_fusiliers
+	set_country_flag = forbid_flagship_modification_flag_dutch_courage
+	set_country_flag = forbid_flagship_modification_flag_spanish_mass_load_cannons
+	set_country_flag = forbid_flagship_modification_flag_spanish_treasure_fleet
+	set_country_flag = forbid_flagship_modification_flag_spanish_grand_armada
+	set_country_flag = forbid_flagship_modification_flag_portuguese_trade_route_map
+	set_country_flag = forbid_flagship_modification_flag_portuguese_bombardier
+	set_country_flag = forbid_flagship_modification_flag_portuguese_navigators
+	set_country_flag = forbid_flagship_modification_flag_standardized_signal_book
+	set_country_flag = forbid_flagship_modification_flag_mortars
+	set_country_flag = forbid_flagship_modification_flag_improved_crows_nest
+	set_country_flag = forbid_flagship_modification_flag_command_aftercastle
+	set_country_flag = forbid_flagship_modification_flag_trade_route_map
+	set_country_flag = forbid_flagship_modification_flag_mass_load_cannons
+	set_country_flag = forbid_flagship_modification_flag_integrated_marines
+	set_country_flag = forbid_flagship_modification_flag_hull_sheating
+
+	random_owned_province = {
+		limit = { has_province_flag = F23_sea_hold_spawn_location }
+		create_flagship = {    
+			name = "The Sea Hold"
+			type = galley
+		}
+		clr_province_flag = F23_sea_hold_spawn_location
+	}
+
+	clr_country_flag = forbid_flagship_modification_flag_captains_log
+	clr_country_flag = forbid_flagship_modification_flag_spare_jolly_roger
+	clr_country_flag = forbid_flagship_modification_flag_flag_officers
+	clr_country_flag = forbid_flagship_modification_flag_scandinavian_flag_officers
+	clr_country_flag = forbid_flagship_modification_flag_portuguese_corps_of_fusiliers
+	clr_country_flag = forbid_flagship_modification_flag_dutch_courage
+	clr_country_flag = forbid_flagship_modification_flag_spanish_mass_load_cannons
+	clr_country_flag = forbid_flagship_modification_flag_spanish_treasure_fleet
+	clr_country_flag = forbid_flagship_modification_flag_spanish_grand_armada
+	clr_country_flag = forbid_flagship_modification_flag_portuguese_trade_route_map
+	clr_country_flag = forbid_flagship_modification_flag_portuguese_bombardier
+	clr_country_flag = forbid_flagship_modification_flag_portuguese_navigators
+	clr_country_flag = forbid_flagship_modification_flag_standardized_signal_book
+	clr_country_flag = forbid_flagship_modification_flag_mortars
+	clr_country_flag = forbid_flagship_modification_flag_improved_crows_nest
+	clr_country_flag = forbid_flagship_modification_flag_command_aftercastle
+	clr_country_flag = forbid_flagship_modification_flag_trade_route_map
+	clr_country_flag = forbid_flagship_modification_flag_mass_load_cannons
+	clr_country_flag = forbid_flagship_modification_flag_integrated_marines
+	clr_country_flag = forbid_flagship_modification_flag_hull_sheating
+
+	clr_country_flag = F23_sea_hold_base
+	clr_country_flag = F23_sea_hold_improved_battlements
+	clr_country_flag = F23_sea_hold_mortar_bay
+	clr_country_flag = F23_sea_hold_gyrocopter_bay
+	clr_country_flag = F23_sea_hold_floating_farms
+	clr_country_flag = F23_sea_hold_landing_bay
+}
+
+# Country scope.
+F23_sea_hold_undocking = {
+	hidden_effect = {
+		random_owned_province = {
+			limit = {
+				has_province_flag = F23_sea_hold_docked_prov
+			}
+			F23_sea_hold_clear_modifiers = yes
+
+			clr_province_flag = F23_sea_hold_docked_prov
+		}
+	}
+	F23_sea_hold_spawn = yes
+}
+
+# Country scope.
+F23_sea_hold_overhaul = {
+	hidden_effect = {
+		526 = {
+			F23_sea_hold_clear_modifiers = yes
+
+			clr_province_flag = F23_sea_hold_docked_prov
+		}
+		clr_country_flag = F23_sea_hold_docked_country
+		clr_country_flag = F23_sea_hold_active
+	}
+}
+
+# Province scope. 
+F23_sea_hold_clear_modifiers = {
+	if = {
+		limit = {
+			has_province_flag = F23_sea_hold_permanently_docked
+		}
+		# Don't punish the player for potentially being silly, so skip here.
+	}
+	else = {
+		if = {
+			limit = {
+				owner = { has_country_flag = F23_sea_hold_ramparts_enabled }
+			}
+			remove_province_modifier = F23_sea_hold_prov_mod_ramparts_0
+			remove_province_modifier = F23_sea_hold_prov_mod_ramparts_1
+			remove_province_modifier = F23_sea_hold_prov_mod_ramparts_2
+			remove_province_modifier = F23_sea_hold_prov_mod_ramparts_3
+			remove_province_modifier = F23_sea_hold_prov_mod_ramparts_4
+			remove_province_modifier = F23_sea_hold_prov_mod_ramparts_5
+		}
+
+		if = {
+			limit = {
+				owner = { has_country_flag = F23_sea_hold_development_enabled }
+			}
+			remove_province_modifier = F23_sea_hold_prov_mod_development_0
+			remove_province_modifier = F23_sea_hold_prov_mod_development_1
+			remove_province_modifier = F23_sea_hold_prov_mod_development_2
+			remove_province_modifier = F23_sea_hold_prov_mod_development_3
+			remove_province_modifier = F23_sea_hold_prov_mod_development_4
+			remove_province_modifier = F23_sea_hold_prov_mod_development_5
+		}
+
+		if = {
+			limit = {
+				owner = { has_country_flag = F23_sea_hold_uthojdihr_enabled }
+			}
+			remove_province_modifier = F23_sea_hold_prov_mod_uthojdihr_1
+			remove_province_modifier = F23_sea_hold_prov_mod_uthojdihr_2
+			remove_province_modifier = F23_sea_hold_prov_mod_uthojdihr_3
+			remove_province_modifier = F23_sea_hold_prov_mod_uthojdihr_4
+			remove_province_modifier = F23_sea_hold_prov_mod_uthojdihr_5
+		}
+
+		if = {
+			limit = {
+				owner = { has_country_flag = F23_sea_hold_artisan_enabled }
+			}
+			remove_province_modifier = F23_sea_hold_prov_mod_artisan_0
+			remove_province_modifier = F23_sea_hold_prov_mod_artisan_1
+			remove_province_modifier = F23_sea_hold_prov_mod_artisan_2
+			remove_province_modifier = F23_sea_hold_prov_mod_artisan_3
+			remove_province_modifier = F23_sea_hold_prov_mod_artisan_4
+			remove_province_modifier = F23_sea_hold_prov_mod_artisan_5
+
+			area = {
+				remove_province_modifier = F23_sea_hold_prov_mod_artisan_same_area_0
+				remove_province_modifier = F23_sea_hold_prov_mod_artisan_same_area_1
+				remove_province_modifier = F23_sea_hold_prov_mod_artisan_same_area_2
+				remove_province_modifier = F23_sea_hold_prov_mod_artisan_same_area_3
+				remove_province_modifier = F23_sea_hold_prov_mod_artisan_same_area_4
+				remove_province_modifier = F23_sea_hold_prov_mod_artisan_same_area_5
+
+				every_neighbor_province = {
+					area = {
+						remove_province_modifier = F23_sea_hold_prov_mod_artisan_adjacent_area_0
+						remove_province_modifier = F23_sea_hold_prov_mod_artisan_adjacent_area_1
+						remove_province_modifier = F23_sea_hold_prov_mod_artisan_adjacent_area_2
+						remove_province_modifier = F23_sea_hold_prov_mod_artisan_adjacent_area_3
+						remove_province_modifier = F23_sea_hold_prov_mod_artisan_adjacent_area_4
+						remove_province_modifier = F23_sea_hold_prov_mod_artisan_adjacent_area_5
+					}
+				}
+			}
+		}
+
+		remove_province_modifier = F23_sea_hold_prov_mod_settlement
+
+		if = {
+			limit = {
+				owner = { has_country_flag = gyrocopter_bay_enabled }
+			}
+			region = { remove_province_modifier = F23_sea_hold_gyrocopter_bombardment_debuff }
+		}
+	}
+}
+
+# Country scope.
+F23_sea_hold_docking = {
+	custom_tooltip = F23_sea_hold_docking_tt
+	hidden_effect = {
+		random_owned_province = {
+			if = {
+				limit = { galleys_in_province = 1 has_province_flag = F23_improved_trading_post_flag }
+				kill_units = { who = owner type = galley } 
+				if = {
+					limit = { owner = { NOT = { num_of_galley = 1 } } }
+					owner = { set_country_flag = F23_sea_hold_docked_country }
+					set_province_flag = F23_sea_hold_docked_prov
+
+					F23_sea_hold_apply_effect_province = yes
+				}
+				else = {
+					owner = { country_event = { id = flavour_ovdal_tungr.58 } }
+				}
+			}
+		}
+	}
+}
+
+# Province scope.
+F23_sea_hold_apply_modifiers_effect = {
+	if = { 
+		limit = { 
+			owner = { 
+				NOT = { war_with = F23 }
+				has_opinion = { who = F23 value = 0 }
+			} 
+			NOT = { has_province_modifier = F23_sea_hold_artisan_marker }
+		} 
+		if      = { limit = { has_province_modifier = F23_improved_trading_post_1 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_1 duration = -1 } }
+		else_if = { limit = { has_province_modifier = F23_improved_trading_post_2 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_2 duration = -1 } }
+		else_if = { limit = { has_province_modifier = F23_improved_trading_post_3 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_3 duration = -1 } }
+		else_if = { limit = { has_province_modifier = F23_improved_trading_post_4 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_4 duration = -1 } }
+		else_if = { limit = { has_province_modifier = F23_improved_trading_post_5 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_5 duration = -1 } }
+	}
+}
+
+# Province scope
+F23_sea_hold_apply_artisan_modifiers_effect = {
+	F23_sea_hold_apply_modifiers_effect = { module = artisan }
+	add_province_modifier = { name = F23_sea_hold_artisan_marker duration = 1 }
+
+	trigger_switch =  {
+		on_trigger = has_province_modifier
+
+		F23_improved_trading_post_1 = { F23_sea_hold_docking_artisan_area = { level = 1 } }
+		F23_improved_trading_post_2 = { F23_sea_hold_docking_artisan_area = { level = 2 } }
+		F23_improved_trading_post_3 = { F23_sea_hold_docking_artisan_area = { level = 3 } }
+		F23_improved_trading_post_4 = { F23_sea_hold_docking_artisan_area = { level = 4 } }
+		F23_improved_trading_post_5 = { F23_sea_hold_docking_artisan_area = { level = 5 } }
+	}
+
+}
+
+# Province scope.
+F23_sea_hold_docking_artisan_area = {
+	area = {
+		limit = { NOT = { has_province_modifier = F23_sea_hold_artisan_marker } }
+		F23_sea_hold_docking_artisan_help = { module = artisan_same_area level = $level$ }
+		add_province_modifier = { name = F23_sea_hold_artisan_marker duration = 1 }
+
+		every_neighbor_province	= {
+			limit = { NOT = { has_province_modifier = F23_sea_hold_artisan_marker } }
+			area = {
+				limit = { NOT = { has_province_modifier = F23_sea_hold_artisan_marker } }
+				F23_sea_hold_docking_artisan_help = { module = artisan_adjacent_area level = $level$ }
+				add_province_modifier = { name = F23_sea_hold_artisan_marker duration = 1 }
+			}
+		}
+	}
+}
+
+# Province scope.
+F23_sea_hold_docking_artisan_help = {
+	if      = { limit = { has_province_modifier = F23_improved_trading_post_1 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_$level$ duration = -1 } }
+	else_if = { limit = { has_province_modifier = F23_improved_trading_post_2 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_$level$ duration = -1 } }
+	else_if = { limit = { has_province_modifier = F23_improved_trading_post_3 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_$level$ duration = -1 } }
+	else_if = { limit = { has_province_modifier = F23_improved_trading_post_4 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_$level$ duration = -1 } }
+	else_if = { limit = { has_province_modifier = F23_improved_trading_post_5 } add_province_modifier = { name = F23_sea_hold_prov_mod_$module$_$level$ duration = -1 } }
+}
+
+# Country scope.
+F23_sea_hold_design_modification_effect = {
+	[[enable]
+		if = {
+			limit = { NOT = { has_country_flag = F23_sea_hold_active } }
+			hidden_effect = {
+				change_variable = { which = F23_sea_hold_var_modifications_available value = -1 }
+				change_variable = { which = F23_sea_hold_var_total_slots_available value = -1 }				
+			}
+			set_country_flag = F23_sea_hold_$modification$_enabled			
+		}
+		else = { custom_tooltip = F23_sea_hold_active_cannot_make_changes_tt }
+		custom_tooltip = F23_sea_hold_design_$modification$_enable
+
+	]
+	[[disable]
+		if = {
+			limit = { NOT = { has_country_flag = F23_sea_hold_active } }
+			hidden_effect = {
+				change_variable = { which = F23_sea_hold_var_modifications_available value = 1 }
+				change_variable = { which = F23_sea_hold_var_total_slots_available value = 1 }				
+			}
+			clr_country_flag = F23_sea_hold_$modification$_enabled
+		}
+		else = { custom_tooltip = F23_sea_hold_active_cannot_make_changes_tt }
+		custom_tooltip = F23_sea_hold_design_$modification$_disable
+	]
+	[[maxed]
+		if = { limit = { NOT = { has_country_flag = F23_sea_hold_active } } }
+		else = { custom_tooltip = F23_sea_hold_active_cannot_make_changes_tt }
+		custom_tooltip = F23_cannot_enable
+	]
+	custom_tooltip = F23_sea_hold_design_$modification$_desc
+}
+
+# Country scope.
+F23_sea_hold_design_module_effect = {
+	[[enable]
+		if = {
+			limit = { NOT = { has_country_flag = F23_sea_hold_active } }
+			hidden_effect = { change_variable = { which = F23_sea_hold_var_total_slots_available value = -1 } }
+			set_country_flag = F23_sea_hold_$module$_enabled		
+		}
+		else = { custom_tooltip = F23_sea_hold_active_cannot_make_changes_tt }
+		custom_tooltip = F23_sea_hold_design_$module$_enable
+	]
+	[[disable]
+		if = {
+			limit = { NOT = { has_country_flag = F23_sea_hold_active } }
+			hidden_effect = { change_variable = { which = F23_sea_hold_var_total_slots_available value = 1 } }
+			clr_country_flag = F23_sea_hold_$module$_enabled
+		}
+		else = { custom_tooltip = F23_sea_hold_active_cannot_make_changes_tt }
+		custom_tooltip = F23_sea_hold_design_$module$_disable
+	]
+	[[maxed]
+		if = { limit = { NOT = { has_country_flag = F23_sea_hold_active } } }
+		else = { custom_tooltip = F23_sea_hold_active_cannot_make_changes_tt }
+		custom_tooltip = F23_cannot_enable
+	]
+	custom_tooltip = F23_sea_hold_design_$module$_desc
+}
+
+# Province scope.
+F23_sea_hold_set_flags = {
+	if = { limit = { owner = { has_country_flag = F23_sea_hold_ramparts_enabled } } set_province_flag = F23_sea_hold_ramparts }
+	if = { limit = { owner = { has_country_flag = F23_sea_hold_development_enabled } NOT = { province_id = 526 } } set_province_flag = F23_sea_hold_development }
+	if = { limit = { owner = { has_country_flag = F23_sea_hold_uthojdihr_enabled } } set_province_flag = F23_sea_hold_uthojdihr }
+	if = { limit = { owner = { has_country_flag = F23_sea_hold_artisan_enabled } } set_province_flag = F23_sea_hold_artisan } 
+	if = { limit = { owner = { has_country_flag = F23_sea_hold_settlement_enabled } } set_province_flag = F23_sea_hold_settlement }
+}
+
+# Province scope.
+F23_sea_hold_clear_flags = {
+	if = {
+		limit = { NOT = { has_province_flag = F23_sea_hold_permanently_docked } }
+		clr_province_flag = F23_sea_hold_ramparts
+		clr_province_flag = F23_sea_hold_development
+		clr_province_flag = F23_sea_hold_uthojdihr
+		clr_province_flag = F23_sea_hold_artisan
+		clr_province_flag = F23_sea_hold_settlement
+	}
+}
+
+# Country scope.
+F23_sea_hold_permadock_effect = {
+	random_owned_province = {
+		limit = { has_province_flag = F23_sea_hold_docked_prov }
+		clr_province_flag = F23_sea_hold_docked_prov
+		set_province_flag = F23_sea_hold_permanently_docked
+
+		F23_sea_hold_set_flags = yes
+	}
+	clr_province_flag = F23_sea_hold_docked_country
+	clr_country_flag = F23_sea_hold_active
+	
+	clr_country_flag = F23_sea_hold_ramparts_enabled
+	clr_country_flag = F23_sea_hold_development_enabled
+	clr_country_flag = F23_sea_hold_uthojdihr_enabled
+	clr_country_flag = F23_sea_hold_artisan_enabled
+	clr_country_flag = F23_sea_hold_settlement_enabled
+}
+
+# Country scope.
+F23_sea_hold_permadock_reapply_effect_country = {
+	# Starts at highest possible level of trading port, then moves down.
+	every_owned_province = {
+		limit = { 
+			has_province_flag = F23_sea_hold_permanently_docked
+			has_province_modifier = F23_improved_trading_post_5
+		}
+		F23_sea_hold_apply_effect_province = yes
+	}
+	every_owned_province = {
+		limit = { 
+			has_province_flag = F23_sea_hold_permanently_docked
+			has_province_modifier = F23_improved_trading_post_4
+		}
+		F23_sea_hold_apply_effect_province = yes
+	}
+	every_owned_province = {
+		limit = { 
+			has_province_flag = F23_sea_hold_permanently_docked
+			has_province_modifier = F23_improved_trading_post_3
+		}
+		F23_sea_hold_apply_effect_province = yes
+	}
+	every_owned_province = {
+		limit = { 
+			has_province_flag = F23_sea_hold_permanently_docked
+			has_province_modifier = F23_improved_trading_post_2
+		}
+		F23_sea_hold_apply_effect_province = yes
+	}
+	every_owned_province = {
+		limit = { 
+			has_province_flag = F23_sea_hold_permanently_docked
+			has_province_modifier = F23_improved_trading_post_1
+		}
+		F23_sea_hold_apply_effect_province = yes
+	}
+
+}
+
+# Province scope.
+F23_sea_hold_apply_effect_province = {
+	if = {
+		limit = { has_province_flag = F23_sea_hold_gyrocopter_bay_enabled }
+		region = {
+			limit = { owner = { war_with = F23 } }
+			add_province_modifier = { name = F23_sea_hold_gyrocopter_bombardment_debuff duration = 1825 }
+		}
+	}
+
+	if = {
+		limit = { has_province_flag = F23_sea_hold_ramparts_enabled }
+		F23_sea_hold_apply_modifiers_effect = { module = ramparts }
+	}
+	if = {
+		limit = { has_province_flag = F23_sea_hold_development_enabled NOT = { province_id = 526 } }
+		F23_sea_hold_apply_modifiers_effect = { module = development }
+	}
+	if = {
+		limit = { has_province_flag = F23_sea_hold_uthojdihr_enabled }
+		F23_sea_hold_apply_modifiers_effect = { module = uthojdihr }
+	}
+	if = {
+		limit = { has_province_flag = F23_sea_hold_artisan_enabled }
+		F23_sea_hold_apply_artisan_modifiers_effect = yes
+	}
+
+	if = {
+		limit = { has_province_flag = F23_sea_hold_settlement_enabled }
+		add_province_modifier = { name = F23_sea_hold_prov_mod_settlement duration = -1 }
+	}
+}

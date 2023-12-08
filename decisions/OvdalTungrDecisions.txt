@@ -1,0 +1,83 @@
+country_decisions = {
+	F23_sea_hold_menu = {
+		major = yes
+		potential = {
+			tag = F23
+			# mission_completed = F23_the_sea_hold # TODO OT, enable this when testing is done.
+		}
+		
+		provinces_to_highlight = {
+
+		}
+		
+		allow = {
+			NOT = { AI = yes }
+			NOT = { has_country_flag = F23_sea_hold_menu_open }
+		}
+		
+		effect = {
+			country_event = { id = flavour_ovdal_tungr.50 }
+			hidden_effect = { 
+				# TODO OT, remove this once testing is done. Is handled through the Sea Hold mission.
+				if = {
+					limit = {
+						NOT = { has_country_flag = F23_sea_hold_testing_var_set }
+					}
+				}
+				set_country_flag = F23_sea_hold_testing_var_set
+				set_variable = { which = F23_sea_hold_var_modifications_available value = 2 }
+				set_variable = { which = F23_sea_hold_var_total_slots_available value = 2 }
+			}
+		}	
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	F23_sea_hold_study_decision = {
+		major = yes
+		potential = {
+			tag = F23
+			# mission_completed = F23_a_home_on_the_seas
+		}
+		
+		provinces_to_highlight = {
+
+		}
+		
+		allow = {
+
+		}
+		
+		effect = {
+
+		}	
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	F23_upstream_trade_decision = {
+		major = yes
+		potential = {
+			tag = F23
+			# mission_completed = F23_steamers
+		}
+		
+		provinces_to_highlight = {
+
+		}
+		
+		allow = {
+
+		}
+		
+		effect = {
+
+		}	
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
