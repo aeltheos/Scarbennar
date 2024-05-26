@@ -1,202 +1,120 @@
-bahar_a = {
-	slot = 1
-	generic = no
-	ai = yes
-	has_country_shield = yes
-	potential = { tag = F23 } 
+# Designed and coded by Magnive.
 
-	F23_petty_king_protection = {
-		icon = mission_approach_throne
-		position = 2
-		required_missions = { F23_the_mountain_smothers } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  
-			OR = {
-				AND = {
-					treasury = 150
-					alliance_with = U16 # Ourdia
-					#U16 = { # TODO, figure out how to do this.
-					#	all_neighbor_country = {
-					#		limit = {
-					#			NOT = { tag = ROOT }
-					#		}
-					#		NOT = {
-					#			army_size = ROOT
-					#		}
-					#	}
-					#}
-				}
-				U16 = {
-					vassal_of = ROOT
-				}
-				510 = { # Bal Ouord
-					NOT = {
-						owned_by = U16
-					}
-					F23_owned_by_friendly_nation = { trust_threshold = 60 }
-				}
-			}
-		} 
-
-		effect = {  
-			if = {
-				limit = {
-					treasury = 150
-					alliance_with = U16
-					#U16 = {
-					#	all_neighbor_country = {
-					#		limit = {
-					#			NOT = { tag = ROOT }
-					#		}
-					#		NOT = {
-					#			army_size = ROOT
-					#		}
-					#	}
-					#}
-				}
-				U16 = {
-					country_event = { id = flavour_ovdal_tungr.1 } # Petty King Protection
-					add_treasury = -150
-				}
-			}
-			add_dwarven_minority_size_effect = yes
-		} 
-	}
-}
-bahar_b = {
+# The highlighting has begun! Everything done?
+bahar_b = { # Done
 	slot = 2
 	generic = no
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = F23 } 
 
-	F23_refugee_resettling = {
-		icon = mission_cope_with_refugees
-		position = 2
-		required_missions = { F23_the_mountain_smothers } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  
-			adm_power = 100
-			527 = {
-				has_fort_building_trigger = yes
-				infantry_in_province = 10
-			}
-		} 
-
-		effect = {  
-			add_adm_power = -100
-			change_culture = ROOT
-			change_religion = ROOT
-			hidden_effect = {
-				remove_province_modifier = goblin_majority_oppressed
-				remove_province_modifier = goblin_majority_coexisting
-				remove_province_modifier = goblin_majority_integrated
-			}
-			add_human_minority_size_effect = yes
-			525 = {
-				add_base_tax = -3
-				add_base_production = -2
-				add_base_manpower = -1
-			}
-			527 = {
-				add_base_tax = 3
-				add_base_production = 2
-				add_base_manpower = 1
-			}
-		} 
-	}
-
 	F23_securing_our_heartlands = {
 		icon = mission_magnificent_castle
-		position = 3
+		position = 2
 		required_missions = {
-			F23_petty_king_protection
-			F23_refugee_resettling
+			F23_the_mountain_smothers
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				AND = {
+					province_id = 519
+					519 = {
+						NOT = { has_fort_building_trigger = yes }
+						NOT = { F23_owned_by_friendly_nation = yes }
+					}
+				}
+				AND = {
+					province_id = 3223
+					3223 = {
+						NOT = { has_fort_building_trigger = yes }
+						NOT = { F23_owned_by_friendly_nation = yes }
+					}
+				}
+				AND = {
+					province_id = 6759
+					6759 = {
+						NOT = { has_fort_building_trigger = yes }
+						NOT = { F23_owned_by_friendly_nation = yes }
+					}
+				}
+				AND = {
+					province_id = 527
+					527 = {
+						NOT = { owned_by = ROOT }
+						NOT = { has_fort_building_trigger = yes }
+					}
+				}
+			}
+		} 
 
 		trigger = {  
 			510 = {
 				has_fort_building_trigger = yes
-				F23_owned_by_friendly_nation = { trust_threshold = 60 }
+				F23_owned_by_friendly_nation = yes
 			}
 			3223 = {
 				has_fort_building_trigger = yes
-				F23_owned_by_friendly_nation = { trust_threshold = 60 }
+				F23_owned_by_friendly_nation = yes
+			}
+			3223 = {
+				has_fort_building_trigger = yes
+				F23_owned_by_friendly_nation = yes
 			}
 			527 = {
-				has_building = ramparts
-			}
-			if = {
-				limit = { has_dlc = "Leviathan" ai = no } 
-				526 = {
-					num_of_times_expanded_infrastructure = 1
-				}
-				525 = {
-					num_of_times_expanded_infrastructure = 1
-				}
-				527 = {
-					num_of_times_expanded_infrastructure = 1
-				}
+				has_fort_building_trigger = yes
+				owned_by = ROOT
 			}
 		} 
 
 		effect = {  
-			525 = {
-				add_province_modifier = { name = F23_heartland_safety duration = -1}
-			}
-			527 = {
-				add_province_modifier = { name = F23_heartland_safety duration = -1}
-			}
+			510  = { add_permanent_province_modifier = { name = F23_copper_presence duration = -1 } add_dwarven_minority_size_effect = yes }
+			3223 = { add_permanent_province_modifier = { name = F23_copper_presence duration = -1 } add_dwarven_minority_size_effect = yes }
+			3223 = { add_permanent_province_modifier = { name = F23_copper_presence duration = -1 } add_dwarven_minority_size_effect = yes }
+			525  = { add_permanent_province_modifier = { name = F23_heartland_safety duration = -1} }
+			527  = { add_permanent_province_modifier = { name = F23_heartland_safety duration = -1} }
 		} 
 	}
 
-	F23_the_copper_standard = {
+	F23_the_bahari_standard = {
 		icon = mission_iron_and_copper
-		position = 5
+		position = 4
 		required_missions = {
 			F23_securing_our_heartlands
 			F23_a_better_bahar
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				AND = {
+					province_id = 527
+					527 = { NOT = {base_production = 12 } }
+				}
+				AND = {
+					province_id = 538
+					538 = { NOT = {base_production = 8 } }
+				}
+			}
+		} 
 
 		trigger = {  
 			treasury = 250
-			527 = {
-				base_production = 10
-			}
-			538 = {
-				base_production = 6
-			}
+			527 = { base_production = 12 }
+			538 = { base_production =  8 }
 		} 
 
 		effect = {  
 			add_treasury = -250
 			527 = {
 				remove_province_modifier = F23_heartland_safety
-				add_province_modifier = { name = F23_bahari_mint duration = -1}
+				add_permanent_province_modifier = { name = F23_bahari_mint duration = -1}
 				add_human_minority_size_effect = yes
 			}
-			538 = {
-				add_dwarven_minority_size_effect = yes
-			}
-			ROOT = {
-				add_country_modifier = { name = F23_the_bahari_standard duration = -1 }
-			}
+			538 = { add_dwarven_minority_size_effect = yes }
+			ROOT = { add_country_modifier = { name = F23_the_bahari_standard duration = -1 } }
 			538 = {
 				owner = {
 					if = {
-						limit = {
-							is_subject = yes
-							NOT = {
-								is_subject_of = ROOT
-							} 
-						}
-						overlord = {
-							add_country_modifier = { name = F23_the_bahari_standard duration = -1 }
-						}
+						limit = { is_subject = yes NOT = { is_subject_of = ROOT } }
+						overlord = { add_country_modifier = { name = F23_the_bahari_standard duration = -1 } }
 					}
 					else = {
 						add_country_modifier = { name = F23_the_bahari_standard duration = -1 }
@@ -206,7 +124,7 @@ bahar_b = {
 		} 
 	}
 }
-bahar_c = {
+bahar_c = { # Done
 	slot = 3
 	generic = no
 	ai = yes
@@ -216,201 +134,144 @@ bahar_c = {
 	F23_the_mountain_smothers = {
 		icon = mission_mountain_castle
 		position = 1
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				owned_by = U14
+				AND = {
+					area = tungr_mountains_area
+					NOT = { owned_by = ROOT }
+				}
+			}  
+
+		} 
 
 		trigger = {  
 			tungr_mountains_area = {
 				type = all
 				owned_by = ROOT
 			}
-			NOT = {
-				exists = U14
+			NOT = { exists = U14 }
+			527 = {
+				num_of_units_in_province = {
+					who = ROOT
+					amount = 5 
+					type = infantry
+				}
 			}
 		} 
 
 		effect = {  
 			add_country_modifier = { name = F23_the_mountain_smother_buff duration = 3650 }
+			527 = {
+				add_devastation = 25
+				change_culture = ROOT
+				change_religion = ROOT
+				remove_racial_minority_any_size = { race = goblin }
+				
+				kill_units = {
+					who = ROOT
+					type = infantry
+					amount = 2
+				}
+			}
+			add_permanent_claim = 536
 		} 
 	}
 
 	F23_butting_heads = {
 		icon = mission_beheading
-		position = 3
+		position = 2
 		required_missions = {
 			F23_the_mountain_smothers
-			F23_republican_showdown
+			F23_the_rival_republic
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				province_id = 536
+				area = zagnabad_area
+			}
+			NOT = { F23_owned_by_friendly_nation = yes }
+		} 
 
 		trigger = {  
+			zagnabad_area = {
+				type = all
+				F23_owned_by_friendly_nation = yes
+			}
 			536 = {
-				F23_owned_by_friendly_nation = { trust_threshold = 60 }
+				F23_owned_by_friendly_nation = yes
 			}
-			OR = {
-				NOT = {
-					exists = U15
-				}
-				U19 = {
-					is_subject_of = ROOT
-					all_core_province = {
-						owned_by = U19
-					}
-				}
+			if = { limit = { NOT = { 526 = { country_or_non_sovereign_subject_holds = ROOT } } }
+				526 = { owner = { owes_favors = { who = ROOT value = 20 } } }
 			}
+			treasury = 100
 		} 
-
 		effect = {  
-			if = {
-				limit = {
-					NOT = {
-						536 = {
-							owned_by = ROOT
-						}
-					}
+			if = { limit = { NOT = { 536 = { country_or_non_sovereign_subject_holds = ROOT } } }
+				536 = { 
+					custom_tooltip = F23_the_rival_republic_tt
+					hidden_effect = { owner = { country_event = { id = flavour_ovdal_tungr.110 } } } # The Matter of Aqatbar
 				}
-				536 = {
-					owner = {
-						country_event = { id = flavour_ovdal_tungr.2 } # The Matter of Aqatbar
-					}
-				}
-			}
-			if = {
-				limit = {
-					U19 = {
-						is_subject_of = ROOT
-					}
-				}
-				aqatbahar_area = {
-					type = all
-					add_permanent_claim = U19
-				}
-				fajabahar_area = {
-					type = all
-					add_permanent_claim = U19
-				}
-				azka_evran_area = {
-					type = all
-					add_permanent_claim = U19
-				}
-				bahar_szel_uak_area = {
-					type = all
-					add_permanent_claim = U19
-				}
-				birsartenslib_area = {
-					type = all
-					add_permanent_claim = U19
-				}
+				add_treasury = -100
 			}
 			else = {
-				aqatbahar_area = {
-					type = all
-					add_claim = U19
+				536 = { 
+					cede_province = ROOT 
+					add_dwarven_minority_size_effect = yes
+					if = { limit = { NOT = { province_has_center_of_trade_of_level = 2 } }
+					add_center_of_trade_level = 1
+					} 
 				}
-				fajabahar_area = {
-					type = all
-					add_claim = U19
-				}
-				azka_evran_area = {
-					type = all
-					add_claim = U19
-				}
-				bahar_szel_uak_area = {
-					type = all
-					add_claim = U19
-				}
-				birsartenslib_area = {
-					type = all
-					add_claim = U19
-				}
-
+				add_treasury = -100
 			}
-		} 
+		}
 	}
 
 	F23_a_better_bahar = {
 		icon = mission_sunset
-		position = 4
+		position = 3
 		required_missions = { F23_butting_heads } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			region = bahar_region
+			OR = {
+				NOT = { F23_owned_by_friendly_nation = yes }
+				culture = exodus_goblin
+			}
+		} 
 
 		trigger = {  
 			bahar_region = {
 				type = all
-				F23_owned_by_friendly_nation = { trust_threshold = 75 }
+				F23_owned_by_friendly_nation = yes
+				num_of_buildings_in_province = 1
+				NOT = { culture = exodus_goblin }
 			}
 		} 
 
-		effect = {  
-			if = {
-				limit = {
-					U17 = {
-						vassal_of = ROOT
-					}
-					any_subject_country = {
-						NOT = {
-							tag = U17
-						}
-						OR = {
-							bahar_region = {
-								type = any
-								owned_by = PREV
-							}
-							ourdia_region = {
-								type = any
-								owned_by = PREV
-							}
-						}
-					}
-				}
-				country_event = { id = flavour_ovdal_tungr.3 } # Restructuring Bahar?
-			}
+		effect = { 
 			bahar_region = {
-				add_province_modifier = { name = F23_bahari_calm duration = 9125 }
+				remove_racial_minority_any_size = { race = goblin }
+				add_permanent_province_modifier = { name = F23_bahari_calm duration = 9125 }
+			}
+			if = { limit = { U17 = { is_subject_of = F23 } }
+				U17 = {
+					complete_mission = crathanor_secure_the_shipyards
+					complete_mission = crathanor_setting_sun
+				}
 			}
 		} 
 	}
 }
-bahar_d = {
+bahar_d = { # Done
 	slot = 4
 	generic = no
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = F23 } 
 
-	F23_baharkand_outreach = {
-		icon = mission_monarch_diplomacy
-		position = 2
-		required_missions = { F23_the_mountain_smothers } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  
-			NOT = {
-				F34 = {
-					army_size = ROOT
-				}
-			}
-			U19 = {
-				custom_trigger_tooltip = {
-					tooltip = max_gift_tt
-					has_opinion_modifier = {
-						who = ROOT
-						modifier = sent_gift
-						value = 25
-					}
-				}
-				has_opinion = {
-					who = ROOT
-					value = 100
-				}
-			}
-		} 
-
-		effect = {  } 
-	}
-
 	F23_looking_beyond_bahar = {
 		icon = mission_naval_dominance
-		position = 4
+		position = 3
 		required_missions = {
 			F23_butting_heads
 			F23_republican_reaffirmation
@@ -418,126 +279,68 @@ bahar_d = {
 		provinces_to_highlight = {  } 
 
 		trigger = {  
-			employed_advisor = {
-				type = naval_reformer
+			OR = {
+				employed_advisor = { type = naval_reformer }
+				maritime_ideas = 3
+				naval_ideas = 3
+				national_focus = DIP
+				dip_power = 200
 			}
 			treasury = 400
 		} 
 
 		effect = {  
-			add_treasury = -400
+			if = {
+				limit = { 
+					NOT = { 
+						OR = {
+							employed_advisor = { type = naval_reformer }
+							maritime_ideas = 3
+							naval_ideas = 3
+							national_focus = DIP
+						}
+					} 
+				}
+				add_dip_power = -200
+			}
 			516 = { F23_shipyard_construction = yes }
 			521 = { F23_shipyard_construction = yes }
 			526 = { F23_shipyard_construction = yes }
 			531 = { F23_shipyard_construction = yes }
 			536 = { F23_shipyard_construction = yes }
 
-			if = {
-				limit = {
-					check_variable = {
-						which = F23_mission_vassals
-						value = 3
-					}
-				}
-				add_country_modifier = { name = F23_galley_ca_buff duration = 18250 }
+			add_country_modifier = { name = F23_galley_ca_buff duration = 7300 }
+			if = { limit = { employed_advisor = { type = naval_reformer } } 
+				extend_country_modifier = { name = F23_galley_ca_buff duration = 3650 }
 			}
-			else_if = {
-				limit = {
-					check_variable = {
-						which = F23_mission_vassals
-						value = 2
-					}
-				}
-				add_country_modifier = { name = F23_galley_ca_buff duration = 14600 }
-
+			if = { limit = { maritime_ideas = 3 }
+				extend_country_modifier = { name = F23_galley_ca_buff duration = 3650 }
 			}
-			else_if = {
-				limit = {
-					check_variable = {
-						which = F23_mission_vassals
-						value = 1
-					}
-				}
-				add_country_modifier = { name = F23_galley_ca_buff duration = 10950 }
+			if = { limit = { naval_ideas = 3 }
+				extend_country_modifier = { name = F23_galley_ca_buff duration = 3650 }
 			}
-			else = {
-				add_country_modifier = { name = F23_galley_ca_buff duration = 7300 }
+			if = { limit = { national_focus = DIP }
+				extend_country_modifier = { name = F23_galley_ca_buff duration = 3650 }
 			}
-			custom_tooltip = F23_looking_beyond_bahar_tt
+			451 = { discover_country = ROOT add_permanent_claim = ROOT }
+			6761 = { add_permanent_claim = ROOT }
 		}
 	}
 }
-bahar_e = {
+bahar_e = { # Done for now, needs revisiting wrt Crathanor MT
 	slot = 5
 	generic = no
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = F23 } 
 
-	F23_grudges_declared = {
+	F23_the_rival_republic = {
 		icon = mission_diplomacy_missive
 		position = 1
-		provinces_to_highlight = {  } 
-
-		trigger = {  
-			OR = {
-				OR = {
-					U18 = {
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = insulted
-						}
-					}
-					U18 = {
-						has_opinion_modifier = {
-							who = ROOT
-							modifier = scornfully_insulted
-						}
-					}
-				}
-				war_with = U18
-				NOT = {
-					exists = U18
-				}
-			}
-			if = {
-				limit = {
-					ai = no
-				}
-				num_of_generals = 1
-			}
-			if = {
-				limit = {
-					ai = no
-				}
-				employed_advisor = {
-					category = mil
-				}
-			}
+		provinces_to_highlight = { 
+			area = reuyel_area
+			NOT = { F23_owned_by_friendly_nation = yes }
 		} 
-
-		effect = {  
-			521 = {
-				add_permanent_claim = ROOT
-			}
-			if = {
-				limit = {
-					alliance_with = U17
-				}
-				add_trust = {
-					who = U17
-					value = 20
-					mutual = yes
-				} 
-			}
-		} 
-	}
-
-	F23_republican_showdown = {
-		icon = mission_mounted_battle
-		position = 2
-		required_missions = { F23_grudges_declared } 
-		provinces_to_highlight = {  } 
 
 		trigger = {  
 			NOT = {
@@ -545,88 +348,79 @@ bahar_e = {
 			}
 			reuyel_area = {
 				type = all
-				F23_owned_by_friendly_nation = { trust_threshold = 60 }
+				F23_owned_by_friendly_nation = yes
 			}
+			treasury = 100
 		} 
 
 		effect = {  
-			if = {
-				limit = {
-					521 = {	
-						owned_by = ROOT
-					}
+			if = { limit = { NOT = { 521 = { country_or_non_sovereign_subject_holds = ROOT } } }
+				521 = { 
+					custom_tooltip = F23_the_rival_republic_tt
+					hidden_effect = { owner = { country_event = { id = flavour_ovdal_tungr.120 } } } # The Matter of Re-Uyel
 				}
-				521 = {
-					if = {
-						limit = {
-							province_has_center_of_trade_of_level = 2
-						}
-						add_treasury = 200
-					}
-					else = {
-						add_center_of_trade_level = 1
-					}
-					add_dwarven_minority_size_effect = yes				
-				}
+				add_treasury = -100
 			}
 			else = {
-				521 = {
-					owner = {
-						country_event = { id = flavour_ovdal_tungr.4 } # The Matter of Re-Uyel						
-					}
+				521 = { 
+					cede_province = ROOT 
+					add_dwarven_minority_size_effect = yes
+					if = { limit = { NOT = { province_has_center_of_trade_of_level = 2 } }
+						add_center_of_trade_level = 1
+					} 
 				}
+				add_treasury = -100
 			}
 		} 
 	}
 
 	F23_republican_reaffirmation = {
 		icon = mission_diplomatic_relation
-		position = 3
-		required_missions = { F23_republican_showdown } 
+		position = 2
+		required_missions = { F23_the_mountain_smothers F23_the_rival_republic } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  
-			U17 = {
-				OR = {
-					trust = { who = ROOT value = 75 }
-					AND = {
-						alliance_with = ROOT
-						ai = no
-					}
-					is_subject_of = ROOT
-					overlord_of = ROOT
-				}
+		trigger = {
+			alliance_with = U17
+			U17 = { has_opinion = { who = ROOT value = 150 } }
+			OR = {
+				employed_advisor = { type = statesman }
+				employed_advisor = { type = diplomat }
+			}
+			if = { limit = { U17 = { ai = yes } }
+				NOT = { U17 = { army_size = ROOT } }
 			}
 		} 
 
 		effect = {  
 			U17 = {
-				country_event = { id = flavour_ovdal_tungr.5 } # Dwarves and Humans, united
-				largest_increase_of_dwarven_tolerance_effect = yes
+				country_event = { id = flavour_ovdal_tungr.140 } # Dwarves and Humans, united
 			}
-			ROOT = {
-				largest_increase_of_human_tolerance_effect = yes
-			}
-			516 = {
-				add_dwarven_minority_size_effect = yes
-				add_dwarven_minority_size_effect = yes
-			}
-			526 = {
-				add_human_minority_size_effect = yes
-				add_human_minority_size_effect = yes
-			}
+			custom_tooltip = F23_republican_reaffirmation_tt
 		} 
 	}
 
 	F23_our_ilatani_allies = {
 		icon = mission_magic_tower
-		position = 4
+		position = 3
 		required_missions = { F23_republican_reaffirmation } 
 		provinces_to_highlight = {  } 
 
 		trigger = {  
-			# TODO OT, should be updated when Crathanor MT is implemented. 
-			always = yes
+			U17 = {
+				mission_completed = crathanor_ilatani_revival
+				has_opinion = { who = ROOT value = 200 }
+			}
+			busilar_area = {
+				type = all
+				num_of_buildings_in_province = 2
+				owned_by = U17
+			}
+			lorbet_area = {
+				type = all
+				num_of_buildings_in_province = 2
+				owned_by = U17
+			}
 		} 
 
 		effect = {  
@@ -637,69 +431,33 @@ bahar_e = {
 			408 = {
 				add_dwarven_minority_size_effect = yes
 			}
-			U17 = {
-				add_country_modifier = { name = growing_economy duration = 9125 }
-			}
-			# TODO OT, slight modification to Crathanor MT if AI
-		} 
-	}
-
-	F23_securing_our_shipping = {
-		icon = challenge_spanish_power
-		position = 5
-		required_missions = { F23_looking_beyond_bahar } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  
-			OR = {
-				NOT = {
-					exists = F32
-				}
-				F32 = {
-					is_subject_of = U17
-				}
-				F32 = {
-					is_subject_of = ROOT
-				}
-				war_score_against = {
-					who = F32
-					value = 80
+			tooltip = {
+				367 = {
+					add_building = weapons
+					add_permanent_province_modifier = { name = F23_copper_presence duration = -1 }
+					F23 = { add_treasury = -500 }
 				}
 			}
-			451 = {
-				F23_owned_by_friendly_nation = { trust_threshold = 60 }
-				owner = {
-					NOT = {
-						has_reform = pirate_republic_reform
-					}
-				}
-			}
-		} 
-
-		effect = {  
-			if = {
-				limit = {
-					exists = F32
-				}
-				F32 = {
-					remove_government_reform = pirate_republic_reform
-				}
-				if = {
-					limit = {
-						U17 = {
-							is_subject_of = ROOT
+			custom_tooltip = F23_our_ilatani_allies_tt
+			hidden_effect = {
+				businor_region = { 
+					limit = { 
+						owned_by = U17
+						OR = {
+							trade_goods = iron
+							trade_goods = copper
 						}
+						NOT = { has_building = weapons }
 					}
-					U17 = {
-						vassalize = F32
-					}
+					add_building = weapons
+					add_permanent_province_modifier = { name = F23_copper_presence duration = -1 }
+					F23 = { add_treasury = -250 }
 				}
-			}
-			add_country_modifier = { name = F23_pirates_defeated duration = 9125 }
+			}			
 		} 
 	}
 }
-uthojdihr_a = {
+uthojdihr_a = { # Make sure Extending our Reach trigger works properly.
 	slot = 1
 	generic = no
 	ai = yes
@@ -708,54 +466,37 @@ uthojdihr_a = {
 
 	F23_uthojdihr_influence = {
 		icon = mission_hanseatic_city
-		position = 4
+		position = 3
 		required_missions = { F23_butting_heads } 
 		provinces_to_highlight = {  } 
 
 		trigger = {  
-			if = {
-				limit = {
-					owns = 521
-				}
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 					
-					521 = {
-						num_of_times_expanded_infrastructure = 1
+			if = { limit = { owns = 521 }
+				if = { limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 					
+					521 = { 
+						num_of_times_expanded_infrastructure = 1 
+						province_trade_power = 40 
 					}
 				}
-				province_trade_power = 40 # Is this too difficult?
 			}
-			if = {
-				limit = {
-					owns = 536
-				}
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
-					536 = {
-						num_of_times_expanded_infrastructure = 1
+			if = { limit = { owns = 536 }
+				if = { limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
+					536 = { 
+						num_of_times_expanded_infrastructure = 1 
+						province_trade_power = 40 
 					}
 				}
-				province_trade_power = 40
 			}
 			526 = {
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
+				if = { limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
 					num_of_times_expanded_infrastructure = 1
 				}
 				province_trade_power = 40
 			}
-			if = {
-				limit = {
-					owns = 521
-					owns = 536
-					has_dlc = "Emperor"
-				}
+			if = { limit = { owns = 521 owns = 536 has_dlc = "Emperor" }
 				has_estate_privilege = estate_burghers_exclusive_trade_rights
 			}
-			if = {
-				limit = {
-					has_dlc = "Domination"
-				}
+			if = { limit = { has_dlc = "Domination" }
 				has_estate_privilege = estate_burghers_development_of_cities 
 			}
 			OR = {
@@ -771,218 +512,255 @@ uthojdihr_a = {
 		} 
 
 		effect = {  
-			# TODO OT, code improved trading posts.
-			custom_tooltip = F23_uthojdihr_influence_tt_1
-			custom_tooltip = F23_uthojdihr_influence_tt_2
+			custom_tooltip = F23_uthojdihr_influence_tt_1 # TODO OT, this should be moved to the event.
 			hidden_effect = {
 				set_country_flag = enabled_trading_policy_maximize_profit_upgraded
 			}
-			if = {
-				limit = {
-					NOT = {
-						OR = {
-							plutocracy_ideas = 3
-							naval_ideas = 3
-							trade_ideas = 3
-							maritime_ideas = 3
-						}
-					}
-				}
+			if = { limit = { NOT = { OR = { plutocracy_ideas = 3 naval_ideas = 3 trade_ideas = 3 maritime_ideas = 3 } } }
 				add_dip_power = -200
 			}
-			country_event = { id = flavour_ovdal_tungr.6 } #Tugged two ways.
-			add_country_modifier = { name = F23_naval_morale_buff duration = 365}
+			country_event = { id = flavour_ovdal_tungr.0 } #Tugged two ways.
+			hidden_effect = { # TODO OT, did this get fixed?
+				every_owned_province = { limit = { province_trade_power = 40 num_of_times_expanded_infrastructure = 5 } add_province_modifier = { name = F23_improved_trading_post_5 duration = -1 } }
+				every_owned_province = { limit = { province_trade_power = 40 num_of_times_expanded_infrastructure = 4 } add_province_modifier = { name = F23_improved_trading_post_4 duration = -1 } }
+				every_owned_province = { limit = { province_trade_power = 40 num_of_times_expanded_infrastructure = 3 } add_province_modifier = { name = F23_improved_trading_post_3 duration = -1 } }
+				every_owned_province = { limit = { province_trade_power = 40 num_of_times_expanded_infrastructure = 2 } add_province_modifier = { name = F23_improved_trading_post_2 duration = -1 } }
+				every_owned_province = { limit = { province_trade_power = 40 num_of_times_expanded_infrastructure = 1 } add_province_modifier = { name = F23_improved_trading_post_1 duration = -1 } }
+			}
 		} 
 	}
 
 	F23_westward_expansion = {
 		icon = mission_conquer_arakan
-		position = 5
+		position = 4
 		required_missions = { F23_uthojdihr_influence } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  
-			isle_of_tef_area = {
-				type = all
-				owned_by = ROOT
-			}
-			1296 = { # Eborthil trade node
-				OR = {
-					is_strongest_trade_power = ROOT
-					is_strongest_trade_power = U17
-				}
-			}
+		provinces_to_highlight = {  
+			area = isle_of_tef_area
+			NOT = { owned_by = ROOT }
 		} 
 
-		effect = {  
-			# TODO OT, Crathanor missions.
-			376 = {
-				add_permanent_claim = ROOT
+		trigger = {  
+			isle_of_tef_area = { type = all owned_by = ROOT }
+			1296 = { OR = { is_strongest_trade_power = ROOT is_strongest_trade_power = U17 } } # Eborthil trade node
+			NOT = { A29 = { navy_size = ROOT } }
+			NOT = { A33 = { navy_size = ROOT } }
+		} 
+
+		effect = { 
+			if = { limit = { U17 = { is_subject_of = ROOT } } 
+				U17 = {
+					complete_mission = crathanor_returning_home
+					lorbet_area = {
+						add_permanent_claim = U17
+					}
+					busilar_area = {
+						add_permanent_claim = U17
+					}
+				}
+			} 
+			custom_tooltip = F23_westward_expansion_tt_2
+			hidden_effect = {
+				1296 = {
+					every_trade_node_member_province = { 
+						limit = { 
+							province_has_center_of_trade_of_level = 1 
+							NOT = { region = businor_region } 
+							has_port = yes
+						}
+						add_permanent_claim = ROOT
+					}
+				}
 			}
-			288 = {
-				add_permanent_claim = ROOT
-			}
-			404 = {
-				add_permanent_claim = ROOT
-			}
+			404 = { add_permanent_claim = ROOT }
 			custom_tooltip = F23_westward_expansion_tt
 			hidden_effect = {
 				if = {
-					limit = {
-						has_country_modifier = F23_naval_morale_buff
-					}
-
+					limit = { has_country_modifier = F23_naval_morale_buff }
+					add_country_modifier = { name = F23_trade_efficiency_reward duration = 9125 }
 				}
-				add_country_modifier = { name = F23_trade_efficiency_reward duration = 9125 }
 			}
 		} 
 	}
 
 	F23_divenhal_straits = {
 		icon = mission_control_the_channel
-		position = 6
+		position = 5
 		required_missions = { F23_westward_expansion } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				province_id = 369
+				province_id = 404
+			}
+			NOT = { owned_by = ROOT }
+		} 
 
 		trigger = {  
 			369 = {
 				owned_by = ROOT
 				has_coast_defense_building_trigger = yes
 				heavy_ships_in_province = 5
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
+				if = { limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
 					num_of_times_expanded_infrastructure = 1
+				}
+				else = {
+					development = 15
 				}
 			}
 			404 = {
 				owned_by = ROOT
 				has_coast_defense_building_trigger = yes
 				heavy_ships_in_province = 5
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
+				if = { limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
 					num_of_times_expanded_infrastructure = 1
 				}
-			}
-			NOT = { # TODO OT, tooltip is wrong or this is.
-				any_known_country = {
-					capital_scope = {
-						superregion = north_salahad_superregion
-					}
-					num_of_heavy_ship = ROOT
-					navy_size = ROOT
+				else = {
+					development = 15
 				}
 			}
+			num_of_heavy_ship = 20
 		} 
 
 		effect = {
 			369 = {
-				add_permanent_province_modifier = { name = F23_port_jurith_toll duration = -1 }
-				kill_units = {
-					who = ROOT
-					type = heavy_ship
-					amount = 5
-				}
+				add_permanent_province_modifier = { name = F23_port_jurith_toll_1 duration = -1 }
+				kill_units = { who = ROOT type = heavy_ship amount = 5 }
 			}
 			404 = {
-				add_permanent_province_modifier = { name = F23_mushesh_toll duration = -1 }
-				kill_units = {
-					who = ROOT
-					type = heavy_ship
-					amount = 5
+				add_permanent_province_modifier = { name = F23_mushesh_toll_1 duration = -1 }
+				kill_units = { who = ROOT type = heavy_ship amount = 5 }
+			}
+			coast_of_tears_area = { add_claim = ROOT }
+			mothers_delta_area = { add_claim = ROOT }
+			406 = { add_permanent_claim = ROOT }
+
+			custom_tooltip = F23_divenhal_straits_tt_1
+			hidden_effect = {
+				1259 = {
+					every_trade_node_member_province = { 
+						limit = { 
+							province_has_center_of_trade_of_level = 1 
+							NOT = { region = businor_region } 
+							has_port = yes
+						}
+						add_permanent_claim = ROOT
+					}
 				}
 			}
-			coast_of_tears_area = {
-				add_permanent_claim = ROOT
-			}
-			mothers_delta_area = {
-				add_permanent_claim = ROOT
-			}
-			382 = {
-				add_permanent_claim = ROOT
-			}
-			400 = {
-				add_permanent_claim = ROOT
-			}
-			402 = {
-				add_permanent_claim = ROOT
-			}
-			406 = {
-				add_permanent_claim = ROOT
+			custom_tooltip = F23_divenhal_straits_tt_2
+			hidden_effect = {
+				if = { limit = { U17 = { is_subject_of = F23 } }
+					U17 = { complete_mission = crathanor_control_twin_passages }
+					akasik_region = { add_permanent_claim = U17 }
+				}
 			}
 		}	
 	}
 
-	F23_grasping_the_gate = {
+	F23_no_scourge_in_our_seas = {
 		icon = invest_in_the_rich_trades
-		position = 7
+		position = 6
 		required_missions = { F23_divenhal_straits } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = { 
+			OR = {
+				AND = {
+					OR = {
+						region = akasik_region
+						region = businor_region
+					}
+					has_port = yes
+					owner = { culture_group	= gnollish }
+				}
+				owner = { 
+					OR = {
+						tag = A74
+						tag = F32
+					}
+					has_reform = pirate_republic_reform
+					NOT = { is_subject_of = F23 }
+					NOT = { is_subject_of = U17 }
+				}
+			}
+		} 
 
 		trigger = { 
-			treasury = 500 
-			382 = {
-				owned_by = ROOT
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
-					num_of_times_expanded_infrastructure = 1
-				}
-				if = {
-					limit = { has_dlc = "Dharma" } 
-					province_has_center_of_trade_of_level = 2
+			NOT = {
+				akasik_region = {
+					has_port = yes
+					owner = { culture_group	= gnollish }
 				}
 			}
-			400 = {
-				owned_by = ROOT
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
-					num_of_times_expanded_infrastructure = 1
-				}
-				if = {
-					limit = { has_dlc = "Dharma" } 
-					province_has_center_of_trade_of_level = 2
+			NOT = {
+				businor_region = {
+					has_port = yes
+					owner = { culture_group	= gnollish }
 				}
 			}
-			402 = {
-				owned_by = ROOT
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
-					num_of_times_expanded_infrastructure = 1
-				}
-				if = {
-					limit = { has_dlc = "Dharma" } 
-					province_has_center_of_trade_of_level = 2
-				}
-			}
-			406 = {
-				owned_by = ROOT
-				if = {
-					limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
-					num_of_times_expanded_infrastructure = 1
-				}
-				has_shipyard_building_trigger = yes
-				has_dock_building_trigger = yes
-				num_free_building_slots	= 1
-			}
-			if = {
-				limit = { has_dlc = "Dharma" } 
+			A74 = {
 				OR = {
-					382 = { province_has_center_of_trade_of_level = 3 }
-					400 = { province_has_center_of_trade_of_level = 3 }
-					402 = { province_has_center_of_trade_of_level = 3 }
+					exists = no
+					NOT = { has_reform = pirate_republic_reform }
+					is_subject_of = F23
+					is_subject_of = U17
 				}
 			}
-
+			F32 = {
+				OR = {
+					exists = no
+					NOT = { has_reform = pirate_republic_reform }
+					is_subject_of = F23
+					is_subject_of = U17
+				}
+			}
+			NOT = { any_known_country = { 1296 = { has_privateer_share_in_trade_node = { who = PREV share = 0.01 } } } }
+			NOT = { any_known_country = { 1312 = { has_privateer_share_in_trade_node = { who = PREV share = 0.01 } } } }
 		} 
 
 		effect = {  
-			406 = {
-				add_permanent_province_modifier = { name = F23_local_naval_base duration = -1 }
-				add_building_construction = {
-					building = impressment_offices
-					speed = 0.5
-					cost = 1.0
-				}
-				change_trade_goods = fish
+			369 = {
+				remove_province_modifier = F23_port_jurith_toll_1
+				add_permanent_province_modifier = { name = F23_port_jurith_toll_2 duration = -1 }
+			}
+			404 = {
+				remove_province_modifier = F23_mushesh_toll_1
+				add_permanent_province_modifier = { name = F23_mushesh_toll_2 duration = -1 }
+			}
+			add_navy_tradition = 20
+			add_country_modifier = { name = F23_no_scourge_in_our_seas_mod duration = 9125 }
+		} 
+	}
+
+	F23_extending_our_reach = {
+		icon = mission_konkani_pirates
+		position = 7
+		required_missions = { F23_no_scourge_in_our_seas } 
+		provinces_to_highlight = { 
+			OR = {
+				province_id = 1259
+				province_id = 1303
+				province_id = 1309
+				province_id = 1312
+			}
+			NOT = { F23_extending_our_reach_trigger = yes }
+		} 
+
+		trigger = { 
+			treasury = 2000
+			sailors = 2000
+			1259 = { F23_extending_our_reach_trigger = yes } # Divenhal Gate
+			1303 = { F23_extending_our_reach_trigger = yes } # Flooded Coast
+			1309 = { F23_extending_our_reach_trigger = yes } # Brasan
+			1312 = { F23_extending_our_reach_trigger = yes } # Bahar
+		} 
+
+		effect = {  
+			add_treasury = -2000
+			add_sailors = -2000
+			custom_tooltip = F23_extending_our_reach_tt
+			hidden_effect = {
+				1259 = { F23_extending_our_reach_effect = yes } # Divenhal Gate
+				1303 = { F23_extending_our_reach_effect = yes } # Flooded Coast
+				1309 = { F23_extending_our_reach_effect = yes } # Brasan
+				1312 = { F23_extending_our_reach_effect = yes } # Bahar
 			}
 		} 
 	}
@@ -991,48 +769,28 @@ uthojdihr_a = {
 		icon = mission_dominate_home_trade_node
 		position = 8
 		required_missions = {
-			F23_grasping_the_gate
-			F23_securing_the_sorrow
+			F23_extending_our_reach
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				province_id = 1259 # Divenhal Gates
+				province_id = 1296 # Eborthil
+				province_id = 1303 # Flooded Coast
+				province_id = 1305 # Mothers Sorrow
+				province_id = 1309 # Brasan
+				province_id = 1312 # Bahar
+			}
+			NOT = { OR = { is_strongest_trade_power = ROOT is_strongest_trade_power = U17 } }
+		} 
 
 		trigger = {  
-			1259 = { # Divenhal Gates
-				OR = {
-					is_strongest_trade_power = ROOT
-					is_strongest_trade_power = U17
-				}
-			}
-			1296 = { # Eborthil
-				OR = {
-					is_strongest_trade_power = ROOT
-					is_strongest_trade_power = U17
-				}
-			}
-			1303 = { # Flooded Coast
-				OR = {
-					is_strongest_trade_power = ROOT
-					is_strongest_trade_power = U17
-				}
-			}
-			1305 = { # Mothers Sorrow
-				OR = {
-					is_strongest_trade_power = ROOT
-					is_strongest_trade_power = U17
-				}
-			}
-			1309 = { # Brasan
-				OR = {
-					is_strongest_trade_power = ROOT
-					is_strongest_trade_power = U17
-				}
-			}			
-			1312 = { # Bahar
-				OR = {
-					is_strongest_trade_power = ROOT
-					is_strongest_trade_power = U17
-				}
-			}
+			reform_level = 5 
+			1259 = { OR = { is_strongest_trade_power = ROOT is_strongest_trade_power = U17 } } # Divenhal Gates
+			1296 = { OR = { is_strongest_trade_power = ROOT is_strongest_trade_power = U17 } } # Eborthil
+			1303 = { OR = { is_strongest_trade_power = ROOT is_strongest_trade_power = U17 } } # Flooded Coast
+			1305 = { OR = { is_strongest_trade_power = ROOT is_strongest_trade_power = U17 } } # Mothers Sorrow
+			1309 = { OR = { is_strongest_trade_power = ROOT is_strongest_trade_power = U17 } } # Brasan
+			1312 = { OR = { is_strongest_trade_power = ROOT is_strongest_trade_power = U17 } } # Bahar
 			OR = {
 				full_idea_group = naval_ideas
 				full_idea_group = maritime_ideas
@@ -1040,15 +798,10 @@ uthojdihr_a = {
 		} 
 
 		effect = {  
-			add_country_modifier = {
-				name = "thalassocracy"
-				duration = -1
-			}
-			unlock_government_reform = {
-				government_reform = thalassocracy_reform
-			}
-			change_government_reform_progress = 50			
-			# TODO OT, government reform
+			add_country_modifier = { name = "thalassocracy" duration = -1 }
+			unlock_government_reform = { government_reform = thalassocracy_reform }
+			unlock_government_reform = { government_reform = F23_uthojdihr_backing }
+			unlock_government_reform = { government_reform = F23_trading_post_confederacy }
 		} 
 	}
 }
@@ -1061,27 +814,31 @@ uthojdihr_b = {
 
 	F23_eborthili_infrastructure = {
 		icon = mission_city_prosperity
-		position = 6
+		position = 5
 		required_missions = {
 			F23_westward_expansion
-			F23_the_copper_standard
+			F23_the_bahari_standard
 		}
 		provinces_to_highlight = {  } 
 
 		trigger = {  
 			treasury = 500
 			35 = { # Toref Citadel
-				base_production = 8
-				if = {
-					limit = { has_dlc = "Leviathan" } 
+				base_production = 12
+				if = { limit = { has_dlc = "Leviathan" } 
 					num_of_times_expanded_infrastructure = 1
+				}
+				else = {
+					development = 15
 				}
 			}
 			36 = { # New Tefkora
 				owned_by = ROOT
-				if = {
-					limit = { has_dlc = "Leviathan" } 
+				if = { limit = { has_dlc = "Leviathan" } 
 					num_of_times_expanded_infrastructure = 1
+				}
+				else = {
+					development = 15
 				}
 				has_shipyard_building_trigger = yes
 				has_dock_building_trigger = yes
@@ -1090,28 +847,16 @@ uthojdihr_b = {
 		} 
 
 		effect = {  
-			isle_of_tef_area = {
-				add_dwarven_minority_size_effect = yes
-			}
-			35 = { # Toref Citadel
-				add_permanent_province_modifier = { name = F23_divenhal_exchange duration = -1 }
-
-			}
+			isle_of_tef_area = { add_dwarven_minority_size_effect = yes }
+			35 = { add_permanent_province_modifier = { name = F23_divenhal_exchange duration = -1 } } # Toref Citadel
 			36 = { # New Tefkora
 				add_permanent_province_modifier = { name = F23_local_naval_base duration = -1 }
-				add_building_construction = {
-					building = impressment_offices
-					speed = 0.5
-					cost = 1.0
-				}
+				add_building_construction = { building = impressment_offices speed = 0.5 cost = 1.0 }
 			}
 			remove_country_modifier = F23_the_bahari_standard
 			add_country_modifier = { name = F23_the_divenhal_standard duration = -1 }
 			custom_tooltip = F23_eborthili_infrastructure_tt
-			random_known_country = {
-				limit = {
-					has_country_modifier = F23_the_bahari_standard
-				}
+			random_known_country = { limit = { has_country_modifier = F23_the_bahari_standard alliance_with = F23 }
 				remove_country_modifier = F23_the_bahari_standard
 				add_country_modifier = { name = F23_the_divenhal_standard duration = -1 }
 			}
@@ -1120,92 +865,219 @@ uthojdihr_b = {
 
 	F23_our_granary = {
 		icon = mission_pol_breadbasket_europe
-		position = 7
-		required_missions = { F23_securing_the_sorrow } 
-		provinces_to_highlight = {  } 
+		position = 6
+		required_missions = { F23_divenhal_straits } 
+		provinces_to_highlight = {  
+			OR = {
+				AND = {
+					OR = {
+						area = coast_of_tears_area
+						area = mothers_delta_area
+					} 
+					NOT = { F23_owned_by_friendly_nation =yes }
+				}
+				AND = {
+					area = mothers_delta_area
+					NOT = { base_production = 10 }
+					NOT = { has_manufactory_trigger = yes }
+				}
+			}
+		} 
 
 		trigger = {  
 			if = {
 				limit = { has_dlc = "Dharma" } 
-				463 = { # Koroshesh
-					province_has_center_of_trade_of_level = 3
-				}
+				463 = { province_has_center_of_trade_of_level = 3 } # Koroshesh
 			}
-			coast_of_tears_area = {
-				type = all
-				F23_owned_by_friendly_nation = { trust_threshold = 75 }
-			}
-			mothers_delta_area = {
-				type = all
-				F23_owned_by_friendly_nation = { trust_threshold = 75 }
-			}
+			coast_of_tears_area = { type = all F23_owned_by_friendly_nation =yes }
+			mothers_delta_area = { type = all F23_owned_by_friendly_nation =yes }
 			mothers_delta_area = {
 				type = all
 				base_production = 10
-				if = {
-					limit = {
-						trade_goods = grain
-					}
-					has_building = farm_estate
-				}
+				has_manufactory_trigger = yes
 			}
 		} 
 
 		effect = {  
-			# TODO OT, reduced dev cost on Improved Trading Posts.
+			custom_tooltip = F23_our_granary_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_province_flag = F23_improved_trading_post_flag
+					}
+					add_province_modifier = { name = F23_improved_trading_post_granary duration = -1}
+				}
+			}
+			custom_tooltip = F23_our_granary_tt_2
+			hidden_effect = {
+				mothers_delta_area = { limit = { NOT = { has_building = farm_estate } trade_goods = grain }
+					add_building = farm_estate
+					F23 = { add_treasury = -500 }
+				}
+			}
+			if = { limit = { U17 = { is_subject_of = F23 } }
+				U17 = { complete_mission = crathanor_shores_of_sorrow }
+				custom_tooltip = F23_our_granary_tt_3
+				hidden_effect = {
+					ohitsopot_area = { add_permanent_claim = U17 }
+					coast_of_tears_area = { add_permanent_claim = U17 }
+					mothers_delta_area = { add_permanent_claim = U17 }
+					hitputtiushesh_area = {  add_permanent_claim = U17 }
+					lower_sorrow_area = { add_permanent_claim = U17 }
+					ibtat_axast_area = { add_permanent_claim = U17 }
+					awaashesh_area = { add_permanent_claim = U17 }	
+					masusopot_area = { add_permanent_claim = U17 }				
+				}
+			}
+		} 
+	}
+
+	F23_resting_yet_productive = {
+		icon = mission_sunset
+		position = 9
+		required_missions = { F23_divenhal_dominion F23_our_granary } 
+		provinces_to_highlight = {  
+		} 
+
+		trigger = {
+			U17 = {
+				mission_completed = crathanor_letting_mother_rest
+			}
+			if = { limit = { U17 = { is_subject_of = F23 } }
+				coast_of_tears_area = {
+					type = all
+					light_ships_in_province = 10
+				}
+				OR = {
+					5481 = {
+						owner = {
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+						}
+					}
+					5481 = {
+						owner = {
+							OR = {
+								is_enemy = ROOT
+								is_rival = ROOT
+							}
+						}	
+					}
+				}
+			}
+			coast_of_tears_area = { type = all base_production = 15 has_manufactory_trigger = yes }
+			mothers_delta_area = { type = all base_production = 15 has_manufactory_trigger = yes }
+		} 
+
+		effect = {  
+			custom_tooltip = F23_resting_yet_productive_tt_1
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_province_flag = F23_improved_trading_post_flag
+					}
+					remove_province_modifier = F23_improved_trading_post_granary
+					add_province_modifier = { name = F23_improved_trading_post_granary_improved duration = -1}
+				}
+			}
+			tooltip = {
+				365 = { add_permanent_province_modifier = { name = F23_the_mother_grain duration = -1 } }
+			}
+			custom_tooltip = F23_resting_yet_productive_tt_2
+			hidden_effect = {
+				U17 = {
+					every_owned_province = { 
+						limit = {
+							OR = {
+								region = bahar_region
+								region = ourdia_region
+								region = businor_region
+							}
+						}
+						add_permanent_province_modifier = { name = F23_the_mother_grain duration = -1 }
+					}
+				}
+			}
 		} 
 	}
 }
-overseas_a = {
+overseas_a = { # Done. Probably. Sweetport culture event needs testing.
 	slot = 1
 	generic = no
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = F23 } 
 
-	F23_southern_expedition = {
+	F23_seeking_southern_sarhal = {
 		icon = mission_exploration
 		position = 9
 		required_missions = { F23_divenhal_dominion } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = { 
+			OR = {
+				province_id = 5710
+				province_id = 5813
+				province_id = 6599
+			}
+			AND = {
+				NOT = { F23_owned_by_friendly_nation = yes }
+				NOT = { owner = { has_spy_network_from = { who = ROOT value = 30 } } }
+			}
+		 } 
 
 		trigger = {  
-			OR = {
-				exploration_ideas = 3
-				expansion_ideas = 3
-				AND = {
-					adm = 150
-					dip = 150
+			5710 = {
+				has_discovered = ROOT
+				OR = {
+					F23_owned_by_friendly_nation = yes
+					owner = { has_spy_network_from = { who = ROOT value = 30 } }
 				}
+			}
+			5813 = {
+				has_discovered = ROOT
+				OR = {
+					F23_owned_by_friendly_nation = yes
+					owner = { has_spy_network_from = { who = ROOT value = 30 } }
+				}
+			}
+			6599 = {
+				has_discovered = ROOT
+				OR = {
+					F23_owned_by_friendly_nation = yes
+					owner = { has_spy_network_from = { who = ROOT value = 30 } }
+				}
+			}
+			402 = { # TODO OT, this doesn't seem to work?
+				heavy_ships_in_province = 25
+				light_ships_in_province = 25
 			}
 		} 
 
 		effect = {  
-			if = {
-				limit = {
-					NOT = {
-						OR = {
-							exploration_ideas = 3
-							expansion_ideas = 3
-						}
-					}
-				}
-				add_adm_power = -150
-				add_dip_power = -150
+			add_country_modifier = { name = F23_sarhali_interests duration = -1 }
+			402 = {
+				kill_units = { who = ROOT type = heavy_ship amount = 25 }
+				kill_units = { who = ROOT type = light_ship amount = 25 }
 			}
-			add_country_modifier = { name = F23_southern_expansion duration = 18250 }
 		} 
 	}
 
 	F23_seizing_the_sweetport = {
 		icon = mission_secure_hajj_ports
-		position = 11
-		required_missions = { F23_sarhali_interests } 
-		provinces_to_highlight = {  } 
+		position = 10
+		required_missions = { F23_seeking_southern_sarhal } 
+		provinces_to_highlight = {  
+			province_id = 6632
+		} 
 
 		trigger = {  
+			1458 = { trade_share = { country = ROOT share = 50 } }
+			3082 = { trade_share = { country = ROOT share = 75 } }
+			3084 = { trade_share = { country = ROOT share = 50 } }
 			6632 = { # Teramzadai
 				owned_by = ROOT
+				has_dock_building_trigger = yes
 				if = {
 					limit = { has_dlc = "Dharma" } 
 					province_has_center_of_trade_of_level = 3
@@ -1215,26 +1087,44 @@ overseas_a = {
 					num_of_times_expanded_infrastructure = 2
 				}
 			}
+			adm_power = 100
 		} 
 
 		effect = {  
-			6632 = { # Teramzadai
-				add_dwarven_minority_size_effect = yes
-				# TODO OT, add local culture as accepted.
-			}
+			custom_tooltip = F23_seizing_the_sweetport_tt_1
+			hidden_effect = { set_country_flag = lizardfolk_port_enabled }
 			add_country_modifier = { name = F23_clove_colonies duration = 18250 }
+			add_adm_power = -100
+			custom_tooltip = F23_seizing_the_sweetport_tt_2
+			F23_seizing_the_sweetport_custom_effect = { culture = amezatany }
+			F23_seizing_the_sweetport_custom_effect = { culture = mboala }
+			F23_seizing_the_sweetport_custom_effect = { culture = mazava }
+			F23_seizing_the_sweetport_custom_effect = { culture = fomarati }
+			F23_seizing_the_sweetport_custom_effect = { culture = itayzemby_lizardfolk }
 		} 
 	}
 
 	F23_the_cloves_monopoly = {
 		icon = mission_rb_colonise_spice_islands
-		position = 13
+		position = 12
 		required_missions = {
 			F23_seizing_the_sweetport
-			F23_the_path_to_halass
+			F23_the_path_to_haless
 		}
 		provinces_to_highlight = {  
-			province_id = 6632
+			OR = {
+				area = far_uelos_isles_area
+				area = sil_berkhens_land_area
+				area = pikakely_area
+				area = velanynosy_area
+				AND = {
+					region = fahvanosy_region
+					trade_goods = cloves
+				}
+			}
+			NOT = {
+				F23_owned_by_friendly_nation =yes
+			}
 		} 
 
 		trigger = {  
@@ -1246,98 +1136,393 @@ overseas_a = {
 				province_has_center_of_trade_of_level = 3
 				light_ships_in_province	= 25
 			}
-			6617 = { # Ibidintely
-				province_has_center_of_trade_of_level = 3
-				light_ships_in_province	= 25
+			6617 = { province_has_center_of_trade_of_level = 3 light_ships_in_province	= 25 } # Ibidintely
+			6130 = { province_has_center_of_trade_of_level = 3 light_ships_in_province	= 25 } # Ofonasara
+			6132 = { province_has_center_of_trade_of_level = 3 light_ships_in_province	= 25 } # Terampihaza
+			far_uelos_isles_area = { type = all F23_owned_by_friendly_nation =yes }
+			sil_berkhens_land_area = { type = all F23_owned_by_friendly_nation =yes }
+			pikakely_area = { type = all F23_owned_by_friendly_nation =yes }
+			velanynosy_area = { type = all F23_owned_by_friendly_nation =yes }
+			NOT = {
+				calc_true_if = {
+					fahvanosy_region = {
+						trade_goods = cloves
+						NOT = { F23_owned_by_friendly_nation =yes }
+					}
+					amount = 1
+				}
 			}
-			6130 = { # Ofonasara
-				province_has_center_of_trade_of_level = 3
-				light_ships_in_province	= 25
-			}
-			6132 = { # Terampihaza
-				province_has_center_of_trade_of_level = 3
-				light_ships_in_province	= 25
-			}
-			far_uelos_isles_area  = {
-				type = all
-				country_or_subject_holds = ROOT
-			}
-			sil_berkhens_land_area  = {
-				type = all
-				country_or_subject_holds = ROOT
-			}
-			pikakely_area  = {
-				type = all
-				country_or_subject_holds = ROOT
-			}
-			velanynosy_area = {
-				type = all
-				country_or_subject_holds = ROOT
-			}
-			trade_goods_produced_amount = {
-				trade_goods = cloves
-				amount = 50
-			}
-
+			trade_goods_produced_amount = { trade_goods = cloves amount = 50 }
 		} 
 
-		effect = {  
-			country_event = { id = flavour_ovdal_tungr.7 } # The Clove Monopoly
+		effect = {
+			tooltip = {
+				6632 = {
+					add_permanent_province_modifier = { name = F23_cloves_monopoly_mod duration = -1 }
+				}
+			}  
+			custom_tooltip = F23_the_cloves_monopoly_tt
+			hidden_effect = {
+				every_owned_province = { limit = { trade_goods = cloves }
+					add_permanent_province_modifier = { name = F23_cloves_monopoly_mod duration = -1 }
+				}
+			}
 		} 
 	}
 }
-overseas_b = {
+overseas_b = { # Code here is done. Some events, and could really do with some custom tooltips.
 	slot = 2
 	generic = no
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = F23 } 
 
-	F23_sarhali_interests = {
-		icon = mission_dominate_persian_gulf
-		position = 10
-		required_missions = { F23_southern_expedition } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-
 	F23_safe_sarhali_seas = {
 		icon = mission_raid_christian_trade
-		position = 11
-		required_missions = { F23_sarhali_interests } 
-		provinces_to_highlight = {  } 
+		position = 10
+		required_missions = { F23_seeking_southern_sarhal } 
+		provinces_to_highlight = {  
+			OR = {
+				province_id = 1449
+				province_id = 1458
+				province_id = 3084
+				province_id = 3082
+				province_id = 1465
+			}
+			NOT = { trade_share = { country = ROOT share = 50 } }
+			NOT = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } } 
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			# Dao Nako
+			1465 = { 
+				trade_share = { country = ROOT share = 50 }
+				F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } 
+			}
+			# Biya Mubidya
+			1449 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } 
+				}
+			}
+			# Khazynas Gulf
+			1458 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt		
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } 
+				}
+			}
+			# Sea of Lel
+			3084 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } 
+				}
+			}
+			# Clovesight
+			3082 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } 
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			add_country_modifier = { name = F23_safe_sarhali_seas_mod duration = -1 }
+			custom_tooltip = F23_safe_sarhali_seas_tt
+			hidden_effect = {
+				set_country_flag = F23_distance_negation_sarhal
+			}
+			custom_tooltip = F23_safe_sarhali_seas_tt_2
+			custom_tooltip = F23_upstream_trade_unlock_tt
+			hidden_effect = {
+				1465 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1449 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1458 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				3084 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				3082 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+			}
+			hidden_effect = {
+				set_country_flag = F23_upstream_trade_flag_sarhal
+				if = { limit = { has_global_flag = iron_working_happened }
+					country_event = { id = flavour_ovdal_tungr.3 days = 30 }
+				}
+			}
+		} 
 	}
-
-	F23_the_path_to_halass = {
+	
+	F23_the_path_to_haless = {
 		icon = mam_highway_empire
-		position = 12
+		position = 11
 		required_missions = { F23_safe_sarhali_seas } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			province_id = 6000
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			any_known_country = { 
+				culture_group = baashidi
+				has_opinion = { who = ROOT value = 150 }
+			}
+			# Biya Mubidya
+			1449 = { 
+				trade_share = { country = ROOT share = 75 }
+			}
+			owns = 6000
+			OR = {
+				6000 = {
+					has_great_project = {
+						type = great_merfolk_canal
+						tier = 1
+					}
+				}
+				AND = {
+					treasury = 20000
+					custom_trigger_tooltip = {
+						tooltip = F23_the_path_to_haless_trigger_tt
+						OR = { 
+							if = { 
+								limit = { full_idea_group = infrastructure_ideas }
+								OR = {
+									adm_tech = 20
+									AND = { adm_tech = 19 innovativeness = 20 }
+									AND = { adm_tech = 18 innovativeness = 40 }
+									AND = { adm_tech = 17 innovativeness = 60 }
+									AND = { adm_tech = 16 innovativeness = 80 }
+									AND = { adm_tech = 15 innovativeness = 100 }
+								}
+							}
+							else = {
+								OR = {
+									adm_tech = 22
+									AND = { adm_tech = 21 innovativeness = 20 }
+									AND = { adm_tech = 20 innovativeness = 40 }
+									AND = { adm_tech = 19 innovativeness = 60 }
+									AND = { adm_tech = 18 innovativeness = 80 }
+									AND = { adm_tech = 17 innovativeness = 100 }
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 
-		effect = {  } 
+		effect = {  
+			if = {
+				limit = { 6000 = { has_great_project = { type = great_merfolk_canal } } }
+				add_prestige = 100
+				add_splendor = 400
+			}
+			else = {
+				6000 = { add_great_project = { type = great_merfolk_canal } }
+				add_treasury = -20000
+			}
+			custom_tooltip = F23_the_path_to_haless_tt # Baashidi provinces gain 50 local autonomy.
+			hidden_effect = {
+				every_owned_province = { limit = { culture_group = baashidi }
+					add_local_autonomy = 50
+				}
+			}
+		} 
 	}
-
 	F23_the_copper_seaway = {
 		icon = mission_south_indian_trade
-		position = 14
-		required_missions = { F23_the_path_to_halass } 
-		provinces_to_highlight = {  } 
+		position = 12
+		required_missions = { F23_the_path_to_haless } 
+		provinces_to_highlight = {  
+			OR = {
+				province_id = 1449
+				province_id = 1458
+				province_id = 3084
+				province_id = 3082
+				province_id = 1465
+				province_id = 1361
+				province_id = 1343
+				province_id = 1339
+				province_id = 1364
+				province_id = 1366
+			}
+			NOT = { trade_share = { country = ROOT share = 50 } }
+			NOT = { F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } } 
+		} 
 
-		trigger = {  } 
+		trigger = { 
+			# TODO OT, steamer interaction
+			# Gulf of Rahen
+			1361 = { 
+				trade_share = { country = ROOT share = 50 }
+				F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+			}
+			# Biya Mubidya 
+			1449 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			# Khazynas Gulf
+			1458 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			# Sea of Lel
+			3084 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			# Clovesight
+			3082 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			# Dao Nako
+			1465 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			# Coffee Coast
+			1343 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			# Dakinshi Ahunanja
+			1339 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			# Cay Cam Sinh
+			1364 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			# Arawkelin
+			1366 = { 
+				custom_trigger_tooltip = {
+					tooltip = F23_safe_sarhali_seas_trigger_tt
+					trade_share = { country = ROOT share = 50 }
+					F23_trade_node_requirements = { expand_infra_req = 2 heavy_ship_num = 10 } 
+				}
+			}
+			6000 = {
+				has_great_project = { type = great_merfolk_canal tier = 3 }
+			}			
+		} 
 
-		effect = {  } 
+		effect = {  
+			# TODO OT, steamer interaction
+			custom_tooltip = F23_the_copper_seaway_tt
+			hidden_effect = {
+				set_country_flag = F23_distance_negation_haless
+			}
+			remove_country_modifier = F23_safe_sarhali_seas_mod
+			add_country_modifier = { name = F23_the_copper_seaway_mod duration = -1 }
+			custom_tooltip = F23_safe_sarhali_seas_tt_2
+			custom_tooltip = F23_upstream_trade_unlock_tt
+			hidden_effect = {
+				1465 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1449 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1458 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				3084 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				3082 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1361 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1343 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1339 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1364 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+				1366 = { 
+					random_trade_node_member_province = { limit = { F23_trade_node_requirements = { expand_infra_req = 1 heavy_ship_num = 10 } }
+						kill_units = { who = ROOT type = heavy_ship amount = 10 }
+					}
+				}
+			}
+		} 
 	}
 }
-bulwar_c = {
+bulwar_c = { # Code done, could probably use some custom tooltips.
 	slot = 3
 	generic = no
 	ai = yes
@@ -1346,293 +1531,1356 @@ bulwar_c = {
 
 	F23_heading_for_the_hills = {
 		icon = mission_conquer_50_development
-		position = 6
+		position = 5
 		required_missions = { F23_a_better_bahar } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				province_id = 654
+				province_id = 665
+			}
+			NOT = { F23_owned_by_friendly_nation = yes }
+		} 
 
-		trigger = {  } 
+		trigger = {
+			OR = {
+				AND = {
+					654 = { F23_owned_by_friendly_nation = yes } # Ur-Monkande
+					665 = { F23_owned_by_friendly_nation = yes } # Gelkalis				
+				}
+				AND = {
+					NOT = { exists = F26 }
+					665 = { # Gelkalis
+						owner = {
+							has_spy_network_from = { who = ROOT value = 30 }
+						}
+					}
+				}
+			}  
+		} 
 
-		effect = {  } 
+		effect = {  
+			custom_tooltip = F23_heading_for_the_hills_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						AND = {
+							654 = { F23_owned_by_friendly_nation = yes } # Ur-Monkande
+							665 = { F23_owned_by_friendly_nation = yes } # Gelkalis				
+						}
+					}
+					665 = { # Gelkalis
+						add_trade_modifier = {
+							who = ROOT
+							duration = -1
+							power = 50
+							key = OVDAL_TUNGR_TRADERS
+						}
+					}
+				}
+				else = {
+					665 = { # Gelkalis
+						owner = {
+							declare_war_with_cb = {
+								who = ROOT
+								casus_belli = cb_conquest
+							}
+						}
+					}
+					665 = { # Gelkalis
+						cede_province = F26
+					}
+					vassalize = F26
+				}
+			}
+		} 
 	}
 }
-bulwar_d = {
+grudge = {
 	slot = 4
 	generic = no
 	ai = yes
 	has_country_shield = yes
-	potential = { tag = F23 } 
+	potential = { 
+		tag = F23
+		#has_country_flag = F23_MT_unlock_grudge 
+	} 
 
-	F23_brasanni_connections = {
-		icon = promote_the_carnevale
+	F23_a_debt_repaid = {
+		icon = mission_burning_castle
 		position = 5
-		required_missions = { F23_a_better_bahar } 
-		provinces_to_highlight = {  } 
+		required_missions = { F23_heralding_our_return } 
+		provinces_to_highlight = {  
+			province_id = 4124
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			if = {
+				limit = { 
+					H78 = { exists = yes }
+				}
+				controls = 4124
+				war_score_against = { who = H78 value = 80 }
+			}
+			else = {
+				controls = 4124
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			country_event = { id = flavour_ovdal_tungr.6 } # A Grudge Righted
+		} 
 	}
-
-	F23_to_lake_neza = {
-		icon = mission_reconquer_vologda
-		position = 6
-		required_missions = { F23_brasanni_connections } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-
-	F23_reestablishing_our_influence = {
-		icon = mission_discussion_arch
-		position = 7
-		required_missions = {
-			F23_heading_for_the_hills
-			F23_to_lake_neza
-			F23_up_the_suran
-		}
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
+}
+cash_crops = {
+	slot = 4
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { 
+		tag = F23
+	} 
 
 	F23_cash_crops = {
 		icon = dominant_economy
-		position = 8
+		position = 7
 		required_missions = {
 			F23_reestablishing_our_influence
 			F23_our_granary
 		}
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = { region = bulwar_proper_region region = far_bulwar_region }
+			trade_goods = grain
+			OR = { has_terrain = farmlands has_terrain = grasslands }
+			NOT = {
+				AND = {
+					has_manufactory_trigger = yes
+					base_production = 10
+				}
+			}
+			NOT = { F23_owned_by_friendly_nation =yes }
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			adm_tech = 14
+			calc_true_if = {
+				bulwar_superregion = {
+					F23_owned_by_friendly_nation =yes
+					OR = { region = bulwar_proper_region region = far_bulwar_region }
+					trade_goods = grain
+					OR = { has_terrain = farmlands has_terrain = grasslands }
+					has_manufactory_trigger = yes
+					base_production = 10
+				}
+				amount = 5
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			bulwar_proper_region = {
+				add_permanent_province_modifier = { name = F23_increased_food_prices duration = -1 }
+			}
+			far_bulwar_region = {
+				add_permanent_province_modifier = { name = F23_increased_food_prices duration = -1 }
+			}
+			custom_tooltip = F23_cash_crops_tt
+			hidden_effect = {
+				bulwar_proper_region = {
+					limit = {
+						trade_goods = grain
+						OR = { has_terrain = farmlands has_terrain = grasslands }
+						base_production = 10
+						has_manufactory_trigger = yes
+						F23_owned_by_friendly_nation =yes
+					}
+					if = {
+						limit = { has_building = farm_estate }
+						change_trade_goods = cotton
+						add_building = plantations
+					}
+					else = { change_trade_goods = cotton }
+				}
+				far_bulwar_region = {
+					limit = {
+						trade_goods = grain
+						OR = { has_terrain = farmlands has_terrain = grasslands }
+						base_production = 10
+						has_manufactory_trigger = yes
+						F23_owned_by_friendly_nation =yes
+					}
+					if = {
+						limit = { has_building = farm_estate }
+						change_trade_goods = coffee
+						add_building = plantations
+					}
+					else = { change_trade_goods = coffee }
+				}
+			}
+		} 
 	}
 }
-bulwar_e = {
+bulwar_e = { # Copper Offer missions could probably do with custom tooltips. Cash Crops needs to be properly tested.
 	slot = 5
 	generic = no
 	ai = yes
 	has_country_shield = yes
 	potential = { tag = F23 } 
 
-	F23_up_the_suran = {
-		icon = mission_sunset_alternative
+	F23_heralding_our_return = {
+		icon = mission_discussion_arch
+		position = 4
+		required_missions = { F23_a_better_bahar } 
+		provinces_to_highlight = {  
+			superregion = bulwar_superregion
+			is_capital = yes
+			owner = {
+				is_subject = no
+				NOT = { has_country_modifier = monstrous_nation }
+				NOT = { tag = U17 }
+				NOT = { monthly_income = ROOT }
+			}
+		} 
+
+		trigger = {  
+			OR = {
+				statesman = 3
+				diplomat = 3
+			}
+			1309 = { trade_share = { country = ROOT share = 50 } }
+			OR = {
+				calc_true_if = {
+					all_known_country = {
+						is_subject = no
+						capital_scope = { superregion = bulwar_superregion }
+						NOT = { has_country_modifier = monstrous_nation }
+						has_opinion_modifier = { who = ROOT modifier = sent_gift value = 25 }
+					}
+					amount = 3
+				}
+				NOT = {
+					any_known_country = {
+						is_subject = no
+						capital_scope = { superregion = bulwar_superregion }
+						NOT = { has_country_modifier = monstrous_nation }
+						NOT = { has_opinion_modifier = { who = ROOT modifier = sent_gift value = 25 } }
+					}
+				}
+			}
+		} 
+
+		effect = {  
+			custom_tooltip = F23_copper_offer_unlocked
+		} 
+	}
+
+	F23_reestablishing_our_influence = {
+		icon = reform_the_state
 		position = 6
-		required_missions = { F23_brasanni_connections } 
-		provinces_to_highlight = {  } 
+		required_missions = {
+			F23_heading_for_the_hills
+			F23_heralding_our_return
+		}
+		provinces_to_highlight = {  
+			OR = {
+				AND = {
+					is_capital = yes
+					superregion = bulwar_superregion
+					owner = {
+						is_subject = no
+						NOT = { is_rival = ROOT }
+						NOT = { subsidised_percent_amount = { value = 0.2 } }
+						NOT = { has_opinion_modifier = { who = ROOT modifier = getting_subsidies value = 15 } }
+						NOT = { has_opinion = { who = ROOT value = 100 } }
+						NOT = { has_country_modifier = monstrous_nation } 
+					}
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			1309 = { trade_share = { country = ROOT share = 50 } } # Bay of Brasan, Brasan trade node
+			601 = { trade_share = { country = ROOT share = 50 } } # Bulwar, Bulwar trade node
+			671 = { trade_share = { country = ROOT share = 50 } } # Arkasul, Seionqan trade node
+			640 = { trade_share = { country = ROOT share = 50 } } # Hasr, Sareyand trade node
+			custom_trigger_tooltip = {
+				tooltip = F23_reestablishing_our_influence_trigger_tt
+				NOT = {
+					any_known_country = { # TODO OT, test properly.
+						capital_scope = { superregion = bulwar_superregion }
+						is_subject = no
+						NOT = { has_country_modifier = monstrous_nation } 
+						NOT = { is_rival = ROOT }
+						NOT = { subsidised_percent_amount = { value = 0.2 } }
+						NOT = { has_opinion_modifier = { who = ROOT modifier = getting_subsidies value = 15 } }
+						NOT = { has_opinion = { who = ROOT value = 100 } }
+					}
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			hidden_effect = {
+				country_event = { id = flavour_ovdal_tungr.5 days = 730 random = 365 }
+			}
+			custom_tooltip = F23_reestablishing_our_influence_tt
+			hidden_effect = {
+				set_country_flag = F23_distance_negation_bulwar
+				set_country_flag = F23_easier_bulwari_protectorates
+			}
+
+			#country_event = {
+			#
+			#}
+		}
 	}
 
-	F23_a_debt_repaid = {
-		icon = mission_burning_castle
-		position = 7
-		required_missions = { F23_up_the_suran } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-
-	F23_demonstrating_our_wealth = {
-		icon = mission_entrepot_of_india
-		position = 8
+	F23_encouraging_excess = {
+		icon = promote_the_carnevale
+		position = 9
 		required_missions = { F23_reestablishing_our_influence } 
-		provinces_to_highlight = {  } 
+		provinces_to_highlight = {  
+			OR = {
+				AND = {
+					is_capital = yes
+					superregion = bulwar_superregion
+					owner = {
+						AND = {
+							prestige = ROOT
+							NOT = { tag = U17 }
+						} 	
+					}
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = { 
+			F23_encouraging_excess_trigger = yes
+		} 
 
-		effect = {  } 
+		effect = { 
+			custom_tooltip = F23_encouraging_excess_tt_decision
+			if = { limit = { OR = { has_dlc = "Rights of Man" has_dlc = "Emperor" } }
+				custom_tooltip = F23_encouraging_excess_tt_dlc
+			}
+			else = {
+				custom_tooltip = F23_encouraging_excess_tt_non_dlc
+			}
+			custom_tooltip = F23_encouraging_excess_tt_bankruptcy
+			# TODO OT, accept trade protectorate
+		}  
 	}
 
-	F23_suran_stewardship = {
-		icon = mission_sun_temple
-		position = 11
-		required_missions = { F23_demonstrating_our_wealth } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-
-	F23_a_better_bulwar = {
+	F23_our_bulwar = {
 		icon = mission_new_dawn
-		position = 14
-		required_missions = { F23_suran_stewardship } 
-		provinces_to_highlight = {  } 
+		position = 12
+		required_missions = { F23_encouraging_excess } 
+		provinces_to_highlight = {  
+			OR = {
+				region = bahar_region
+				region = bulwar_proper_region
+				area = sareyand_area
+				area = avamezan_area
+				area = eduz_vacyn_area
+				area = panuses_area
+				area = upper_suran_area
+				area = azka_sur_area
+			}
+			NOT = { 
+				AND = {
+					F23_owned_by_friendly_nation = yes
+					has_influencing_fort = yes
+					has_manufactory_trigger = yes
+				}
+			}
+		} 
 
-		trigger = {  } 
+		trigger = {  
+			bahar_region = {
+				type = all
+				F23_owned_by_friendly_nation = yes
+				has_manufactory_trigger = yes
+				has_influencing_fort = yes
+			}
+			bulwar_proper_region = {
+				type = all
+				F23_owned_by_friendly_nation = yes
+				has_manufactory_trigger = yes
+				has_influencing_fort = yes
+			}
+			sareyand_area = {
+				custom_trigger_tooltip = {
+					tooltip = F23_our_bulwar_area_tt
+					sareyand_area = { 
+						type = all
+						F23_owned_by_friendly_nation = yes
+						has_manufactory_trigger = yes
+						has_influencing_fort = yes
+					}
+				}
+			}
+			avamezan_area = {
+				custom_trigger_tooltip = {
+					tooltip = F23_our_bulwar_area_tt
+					avamezan_area = { 
+						type = all
+						F23_owned_by_friendly_nation = yes
+						has_manufactory_trigger = yes
+						has_influencing_fort = yes
+					}
+				}
+			}
+			eduz_vacyn_area = {
+				custom_trigger_tooltip = {
+					tooltip = F23_our_bulwar_area_tt
+					eduz_vacyn_area = { 
+						type = all
+						F23_owned_by_friendly_nation = yes
+						has_manufactory_trigger = yes
+						has_influencing_fort = yes
+					}
+				}
+			}
+			panuses_area = {
+				custom_trigger_tooltip = {
+					tooltip = F23_our_bulwar_area_tt
+					panuses_area = { 
+						type = all
+						F23_owned_by_friendly_nation = yes
+						has_manufactory_trigger = yes
+						has_influencing_fort = yes
+					}
+				}
+			}
+			upper_suran_area = {
+				custom_trigger_tooltip = {
+					tooltip = F23_our_bulwar_area_tt
+					upper_suran_area = { 
+						type = all
+						F23_owned_by_friendly_nation = yes
+						has_manufactory_trigger = yes
+						has_influencing_fort = yes
+					}
+				}
+			}
+			azka_sur_area = {
+				custom_trigger_tooltip = {
+					tooltip = F23_our_bulwar_area_tt
+					azka_sur_area = { 
+						type = all
+						F23_owned_by_friendly_nation = yes
+						has_manufactory_trigger = yes
+						has_influencing_fort = yes
+					}
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			add_country_modifier = { name = F23_debtorlords_of_bulwar duration = -1 }
+			bahar_region = { add_permanent_province_modifier = { name = F23_copper_aegis duration = -1 } }
+			bulwar_proper_region = { add_permanent_province_modifier = { name = F23_copper_aegis duration = -1 } }
+			sareyand_area = { add_permanent_province_modifier = { name = F23_copper_aegis duration = -1 } }
+			avamezan_area = { add_permanent_province_modifier = { name = F23_copper_aegis duration = -1 } }
+			eduz_vacyn_area = { add_permanent_province_modifier = { name = F23_copper_aegis duration = -1 } }
+			panuses_area = { add_permanent_province_modifier = { name = F23_copper_aegis duration = -1 } }
+			upper_suran_area = { add_permanent_province_modifier = { name = F23_copper_aegis duration = -1 } }
+			azka_sur_area = { add_permanent_province_modifier = { name = F23_copper_aegis duration = -1 } }
+		} 
 	}
 }
-strongbellow_c = {
+strongbellow_c_1 = { # Done, other than highlighting.
 	slot = 3
 	generic = no
 	ai = yes
 	has_country_shield = yes
-	potential = { tag = F23 } 
-
-	F23_a_silverforge_visitor = {
-		icon = mission_dwarf
-		position = 7
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
+	potential = { 
+		tag = F23
+		# has_country_flag = F23_mt_unlock_strongbellow_1 
+	} 
 
 	F23_strongbellow_pumps = {
 		icon = mission_anvil
-		position = 9
-		required_missions = { F23_a_silverforge_visitor } 
+		position = 7
+		required_missions = {  } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {  
+			treasury = 250
+			526 = { # Ovdal Tûngr
+				NOT = { has_siege = yes } 
+				infantry_in_province = 5
+			}
+			if = { limit = { has_dlc = "Cradle of Civilization" } 
+				OR = {
+					quartermaster = 3
+					fortification_expert = 3 
+					mil_power = 100
+				}
+			}
+			else = { 
+				OR = {
+					quartermaster = 2
+					fortification_expert = 2
+					mil_power = 100
+				}
+			}
+			OR = {
+				dip_power = 100
+				A73 = { has_opinion = { who = ROOT value = 150 } }
+			}
+			OR = {
+				adm_power = 100
+				any_known_country = { 
+					capital_scope = { 
+						continent = serpentspine 
+						OR = { has_terrain = dwarven_hold has_terrain = dwarven_hold_surface } 
+					} 
+					has_opinion = { who = ROOT value = 150 } 
+				}
+			}
+		} 
 
-		effect = {  } 
+		effect = {  
+			add_treasury = -250
+			if = { limit = { has_dlc = "Cradle of Civilization" }
+				if = { limit = { OR = { fortification_expert = 3 quartermaster = 3 } } }
+				else = { add_mil_power = -100 }
+			}
+			else = {
+				if = { limit = { OR = { fortification_expert = 2 quartermaster = 2 } } }
+				else = { add_mil_power = -100 }
+			}
+
+			if = { limit = { A73 = { has_opinion = { who = ROOT value = 150 } } } }
+			else = { add_dip_power = -100 }
+			if = { limit = { any_known_country = { is_a_hold = yes capital_scope = { continent = serpentspine } has_opinion = { who = ROOT value = 150 } } } }
+			else = { add_adm_power = -100 }
+			526 = { 
+				kill_units = { who = ROOT type = infantry amount = 5 }
+				remove_province_modifier = F23_flooded_depths
+				hidden_effect = { clr_province_flag = cannot_dig } # TODO OT, make sure you can't dig
+				add_permanent_province_modifier = { name = F23_strongbellow_pumps_mod duration = -1 }
+			}
+		} 
 	}
 
-	F23_steamers = {
-		icon = support_the_bulk_trades
-		position = 10
+	F23_explorers_of_the_depths = {
+		icon = mission_claim_the_canaries
+		position = 8
 		required_missions = { F23_strongbellow_pumps } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {  
+			treasury = 500
+			num_of_marines = 5
+			536 = { base_production = 15 } # Aqatbar
+			estate_loyalty = {
+				estate = estate_adventurers
+				loyalty = 60
+			}			
+		} 
 
-		effect = {  } 
+		effect = {  
+			add_treasury = -500
+			add_estate_loyalty = {
+				estate = estate_adventurers
+				loyalty = -15
+			}
+			country_event = { id = flavour_ovdal_tungr.20 days = 730 }
+		} 
 	}
 }
-strongbellow_d = {
+
+strongbellow_c_2 = {
+	slot = 3
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { 
+		tag = F23
+		# has_country_flag = F23_mt_unlock_strongbellow_2
+	} 
+
+	F23_the_deeper_depths = {
+		icon = mission_retake_ceuta
+		position = 9
+		required_missions = { F23_explorers_of_the_depths } 
+		provinces_to_highlight = {  } 
+
+		trigger = {  
+			num_of_marines = 10
+			526 = { # Ovdal Tûngr
+				F23_owned_by_friendly_nation = yes
+				transports_in_province = 10
+			}
+			533 = { # Pir-Ail
+				F23_owned_by_friendly_nation = yes
+				transports_in_province = 10
+			}
+			581 = {# Yametses
+				F23_owned_by_friendly_nation = yes
+				transports_in_province = 10
+			}
+			6761 = { # Annailsub
+				F23_owned_by_friendly_nation = yes
+				transports_in_province = 10
+			}
+			has_estate_privilege = estate_adventurer_designated_guild_hall
+			# TODO OT, mage loyalty higher than influence
+		} 
+
+		effect = {
+			add_estate_loyalty = {
+				estate = estate_mages
+				loyalty = -15
+			}
+			526 = { # Ovdal Tûngr
+				kill_units = { who = ROOT type = transport amount = 10 }
+			}
+			533 = { # Pir-Ail
+				kill_units = { who = ROOT type = transport amount = 10 }
+			}
+			581 = {# Yametses
+				kill_units = { who = ROOT type = transport amount = 10 }
+			}
+			6761 = { # Annailsub
+				kill_units = { who = ROOT type = transport amount = 10 }
+			}
+			country_event = {
+				id = flavour_ovdal_tungr.20 
+				days = 730
+			}
+		} 
+	}
+}
+
+strongbellow_c_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { 
+		tag = F23
+		# has_country_flag = F23_mt_unlock_strongbellow_3
+	} 
+
+	F23_the_dredging = {
+		icon = mission_look_west
+		position = 10
+		required_missions = { F23_the_deeper_depths F23_steamers } 
+		provinces_to_highlight = {  } 
+
+		trigger = {  
+			526 = {
+				if = { limit = { has_dlc = "Leviathan" ROOT = { ai = no } } 
+					num_of_times_expanded_infrastructure = 5
+				}
+				else = {
+					development = 75
+				}
+			}
+			581 = {
+				owned_by = ROOT
+				has_dock_building_trigger = yes
+				has_building = mage_tower 
+			}
+			custom_trigger_tooltip = {
+				tooltip = F23_the_dredging_tt
+			}
+			if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 18250 } }
+				# base cost = 50000
+				if = { limit = { innovativeness = 100 }
+					treasury = 25000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					treasury = 30000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					treasury = 35000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					treasury = 40000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					treasury = 45000
+				}
+				else = {
+					treasury = 50000
+				}
+			}
+			else_if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 14600 } }
+				# base cost = 60000
+				if = { limit = { innovativeness = 100 }
+					treasury = 30000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					treasury = 36000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					treasury = 42000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					treasury = 48000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					treasury = 54000
+				}
+				else = {
+					treasury = 60000
+				}
+			}
+			else_if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 10950 } }
+				# base cost = 70000
+				if = { limit = { innovativeness = 100 }
+					treasury = 35000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					treasury = 42000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					treasury = 49000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					treasury = 56000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					treasury = 63000
+				}
+				else = {
+					treasury = 70000
+				}
+				
+			}
+			else_if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 7300 } }
+				# base cost = 80000
+				if = { limit = { innovativeness = 100 }
+					treasury = 40000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					treasury = 48000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					treasury = 56000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					treasury = 64000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					treasury = 72000
+				}
+				else = {
+					treasury = 80000
+				}
+				
+			}
+			else_if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 3650 } }
+				# base cost = 90000
+				if = { limit = { innovativeness = 100 }
+					treasury = 45000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					treasury = 54000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					treasury = 63000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					treasury = 72000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					treasury = 81000
+				}
+				else = {
+					treasury = 90000
+				}
+				
+			}
+			else = {
+				# base cost = 100000
+				if = { limit = { innovativeness = 100 }
+					treasury = 50000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					treasury = 60000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					treasury = 70000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					treasury = 80000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					treasury = 90000
+				}
+				else = {
+					treasury = 100000
+				}
+			}
+		} 
+
+		effect = {  
+			526 = { # Ovdal Tûngr
+				add_permanent_province_modifier = { name = F23_strongbellow_shipyard duration = -1 }
+			}
+			
+			if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 18250 } }
+				# base cost = 50000
+				if = { limit = { innovativeness = 100 }
+					add_treasury = -25000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					add_treasury = -30000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					add_treasury = -35000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					add_treasury = -40000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					add_treasury = -45000
+				}
+				else = {
+					add_treasury = -50000
+				}
+			}
+			else_if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 14600 } }
+				# base cost = 60000
+				if = { limit = { innovativeness = 100 }
+					add_treasury = -30000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					add_treasury = -36000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					add_treasury = -42000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					add_treasury = -48000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					add_treasury = -54000
+				}
+				else = {
+					add_treasury = -60000
+				}
+			}
+			else_if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 10950 } }
+				# base cost = 70000
+				if = { limit = { innovativeness = 100 }
+					add_treasury = -35000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					add_treasury = -42000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					add_treasury = -49000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					add_treasury = -56000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					add_treasury = -63000
+				}
+				else = {
+					add_treasury = -70000
+				}
+				
+			}
+			else_if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 7300 } }
+				# base cost = 80000
+				if = { limit = { innovativeness = 100 }
+					add_treasury = -40000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					add_treasury = -48000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					add_treasury = -56000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					add_treasury = -64000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					add_treasury = -72000
+				}
+				else = {
+					add_treasury = -80000
+				}
+				
+			}
+			else_if = { limit = { had_country_flag = { flag = F23_mt_unlock_strongbellow_3 days = 3650 } }
+				# base cost = 90000
+				if = { limit = { innovativeness = 100 }
+					add_treasury = -45000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					add_treasury = -54000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					add_treasury = -63000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					add_treasury = -72000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					add_treasury = -81000
+				}
+				else = {
+					add_treasury = -90000
+				}
+				
+			}
+			else = {
+				# base cost = 100000
+				if = { limit = { innovativeness = 100 }
+					add_treasury = -50000
+				}
+				else_if = { limit = { innovativeness = 90 }
+					add_treasury = -60000
+				}
+				else_if = { limit = { innovativeness = 80 }
+					add_treasury = -70000
+				}
+				else_if = { limit = { innovativeness = 70 }
+					add_treasury = -80000
+				}
+				else_if = { limit = { innovativeness = 60 }
+					add_treasury = -90000
+				}
+				else = {
+					add_treasury = -100000
+				}
+			}
+			country_event = { id = flavour_ovdal_tungr.30 days = 1825 }
+		} 
+	}
+}
+
+strongbellow_c_4 = {
+	slot = 3
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { 
+		tag = F23
+		# has_country_flag = F23_mt_unlock_strongbellow_4
+	} 
+
+	F23_the_sea_hold = {
+		icon = mission_gnomish_ship
+		position = 11
+		required_missions = { F23_the_dredging F23_ironclads } 
+		provinces_to_highlight = {  } 
+
+		trigger = {  
+			526 = { # Ovdal Tûngr
+				custom_trigger_tooltip = {
+					tooltip = F23_the_sea_hold_trigger_tt
+					has_improved_hold_infrastructure = yes
+				}
+			}
+			581 = {# Yametses
+				base_production = 25
+			}
+			if = { limit = { innovativeness = 100 }
+				treasury = 250000
+			}
+			else_if = { limit = { innovativeness = 90 }
+				treasury = 300000
+			}
+			else_if = { limit = { innovativeness = 80 }
+				treasury = 350000
+			}
+			else_if = { limit = { innovativeness = 70 }
+				treasury = 400000
+			}
+			else_if = { limit = { innovativeness = 60 }
+				treasury = 450000
+			}
+			else = {
+				treasury = 500000
+			}
+		} 
+
+		effect = { 
+			if = { limit = { innovativeness = 100 }
+				add_treasury = -250000
+			}
+			else_if = { limit = { innovativeness = 90 }
+				add_treasury = -300000
+			}
+			else_if = { limit = { innovativeness = 80 }
+				add_treasury = -350000
+			}
+			else_if = { limit = { innovativeness = 70 }
+				add_treasury = -400000
+			}
+			else_if = { limit = { innovativeness = 60 }
+				add_treasury = -450000
+			}
+			else = {
+				add_treasury = -500000
+			}
+			526 = { # Ovdal Tûngr
+				downgrade_improved_infrastructure = yes
+			}
+			custom_tooltip = F23_the_sea_hold_tt
+		} 
+	}
+}
+
+
+strongbellow_d = { 
 	slot = 4
 	generic = no
 	ai = yes
 	has_country_shield = yes
-	potential = { tag = F23 } 
+	potential = { 
+		tag = F23
+		#has_country_flag = F23_MT_unlock_strongbellow_society 
+	} 
 
-	F23_probing_the_depths = {
-		icon = mission_look_west
-		position = 10
-		required_missions = { F23_strongbellow_pumps } 
+	F23_strongbellow_society = {
+		icon = mission_dwarf
+		position = 8
+		required_missions = { F23_strongbellow_pumps }
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {  
+			employed_advisor = { category = adm skill = 3 }
+			employed_advisor = { category = dip skill = 3 }
+			employed_advisor = { category = mil skill = 3 }
+		} 
 
-		effect = {  } 
+		effect = { 
+			custom_tooltip = F23_strongbellow_society_tt
+			custom_tooltip = F23_strongbellow_society_tt_inno
+			if = { limit = { innovativeness = 50 }
+				# Nothing
+			}
+			else_if = { limit = { innovativeness = 40 }
+				add_adm_power = -50
+				add_dip_power = -50
+				add_mil_power = -50
+			}
+			else_if = { limit = { innovativeness = 30 }
+				add_adm_power = -100
+				add_dip_power = -100
+				add_mil_power = -100
+			}
+			else_if = { limit = { innovativeness = 20 }
+				add_adm_power = -150
+				add_dip_power = -150
+				add_mil_power = -150
+			}
+			else_if = { limit = { innovativeness = 10 }
+				add_adm_power = -200
+				add_dip_power = -200
+				add_mil_power = -200
+			}
+			else = {
+				add_adm_power = -250
+				add_dip_power = -250
+				add_mil_power = -250
+			}
+			custom_tooltip = F23_strongbellow_society_tt_relations
+			if = {
+				limit = {
+					calc_true_if = {
+						all_known_country = { 
+							culture_group = dwarven 
+							has_opinion = { who = ROOT value = 125 }
+						}
+						amount = 5
+					}
+				}
+				# Nothing
+			}
+			else_if = {
+				limit = {
+					calc_true_if = {
+						all_known_country = { 
+							culture_group = dwarven 
+							has_opinion = { who = ROOT value = 125 }
+						}
+						amount = 4
+					}
+				}
+				add_adm_power = -50
+				add_dip_power = -50
+				add_mil_power = -50
+			}
+			else_if = {
+				limit = {
+					calc_true_if = {
+						all_known_country = { 
+							culture_group = dwarven 
+							has_opinion = { who = ROOT value = 125 }
+						}
+						amount = 3
+					}
+				}
+				add_adm_power = -100
+				add_dip_power = -100
+				add_mil_power = -100
+			}
+			else_if = {
+				limit = {
+					calc_true_if = {
+						all_known_country = { 
+							culture_group = dwarven 
+							has_opinion = { who = ROOT value = 125 }
+						}
+						amount = 2
+					}
+				}
+				add_adm_power = -150
+				add_dip_power = -150
+				add_mil_power = -150
+			}
+			else_if = {
+				limit = {
+					calc_true_if = {
+						all_known_country = { 
+							culture_group = dwarven 
+							has_opinion = { who = ROOT value = 125 }
+						}
+						amount = 1
+					}
+				}
+				add_adm_power = -200
+				add_dip_power = -200
+				add_mil_power = -200
+			}
+			else = {
+				add_adm_power = -250
+				add_dip_power = -250
+				add_mil_power = -250
+			}
+			country_event = { id = flavour_ovdal_tungr.9 }
+		} 
 	}
 
+	F23_steamers = {
+		icon = secure_the_republic
+		position = 9
+		required_missions = { F23_strongbellow_society }
+		provinces_to_highlight = {  } 
+
+		trigger = {  
+			OR = {
+				innovativeness = 75
+				NOT = { has_country_modifier = F23_steam_curios }
+				full_idea_group = maritime_ideas
+			}
+			OR = {
+				treasury = 10000
+				AND = {
+					treasury = 5000
+					full_idea_group = maritime_ideas
+				}
+			}
+			525 = {
+				base_production = 15
+				has_production_or_gold_building_trigger = yes
+				has_dock_building_trigger = yes
+				has_shipyard_building_trigger = yes
+				has_manufactory_trigger = yes
+			}
+			526 = {
+				has_production_or_gold_building_trigger = yes
+				has_dock_building_trigger = yes
+				has_shipyard_building_trigger = yes
+				has_manufactory_trigger = yes
+			}
+		} 
+
+		effect = {
+			if = { limit = { full_idea_group = maritime_ideas }
+				add_treasury = -5000
+			}
+			else = {
+				add_treasury = -10000
+			}
+			add_country_modifier = {
+				name = F23_steamers_mod
+				duration = -1
+			}
+			525 = {
+				change_trade_goods = coal
+				remove_province_modifier = F23_heartland_safety
+				add_province_modifier = { name = F23_heartbeat_of_steam duration = -1 }
+			}
+			custom_tooltip = F23_steamers_tt
+			hidden_effect = { set_country_flag = F23_upsteam_trade_flag_unlock }
+		}
+	}
+}
+
+strongbellow_d_2 = {
+	slot = 4
+	generic = no
+	ai = yes
+	has_country_shield = yes
+	potential = { 
+		tag = F23
+		# has_country_flag = F23_mt_unlock_strongbellow_4
+	} 
+
 	F23_ironclads = {
-		icon = mission_gnomish_ship
-		position = 11
+		icon = mission_forge
+		position = 10
 		required_missions = { F23_steamers } 
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = {
+			if = {
+				limit = { has_dlc = "Rule Britannia" }
+				calc_true_if = {
+					innovativeness = 100
+					full_idea_group = naval_ideas
+					full_idea_group = maritime_ideas
+					navy_tradition = 100
+					trade_goods_produced_amount = {
+						trade_goods = coal
+						amount = 25
+					}
+					amount = 2
+				}
+			}
+			else = {
+				calc_true_if = {
+					innovativeness = 100
+					full_idea_group = naval_ideas
+					full_idea_group = maritime_ideas
+					navy_tradition = 100
+					amount = 2
+				}
+			}
+			if = {
+				limit = {
+					calc_true_if = {
+						innovativeness = 100
+						full_idea_group = naval_ideas
+						full_idea_group = maritime_ideas
+						navy_tradition = 100
+						trade_goods_produced_amount = {
+							trade_goods = coal
+							amount = 25
+						}
+						amount = 5
+					}
+				}
+				treasury = 20000
+			}
+			if = {
+				limit = {
+					calc_true_if = {
+						innovativeness = 100
+						full_idea_group = naval_ideas
+						full_idea_group = maritime_ideas
+						navy_tradition = 100
+						trade_goods_produced_amount = {
+							trade_goods = coal
+							amount = 25
+						}
+						amount = 4
+					}
+				}
+				treasury = 30000
+			}
+			if = {
+				limit = {
+					calc_true_if = {
+						innovativeness = 100
+						full_idea_group = naval_ideas
+						full_idea_group = maritime_ideas
+						navy_tradition = 100
+						trade_goods_produced_amount = {
+							trade_goods = coal
+							amount = 25
+						}
+						amount = 3
+					}
+				}
+				treasury = 40000
+			}
+			else = {
+				treasury = 50000
+			}
 
-		effect = {  } 
-	}
+			OR = {
+				trading_bonus = { trade_goods = iron value = yes }
+				calc_true_if = {
+					all_province = { # Can't do this without all_province. :(
+						F23_owned_by_friendly_nation = yes
+						trade_goods = iron
+						base_production = 10
+						has_building = weapons
+					}
+					amount = 10
+				}
+			}
+		} 
 
-	F23_a_home_on_the_seas = {
-		icon = mission_portuguese_malacca
-		position = 12
-		required_missions = { F23_ironclads } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-
-	F23_the_sea_hold = {
-		icon = mission_gnomish_ship
-		position = 13
-		required_missions = { F23_a_home_on_the_seas } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-
-	F23_artificers_touch = {
-		icon = mission_artificier_experience
-		position = 14
-		required_missions = { F23_the_sea_hold } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
+		effect = {
+			custom_tooltip = F23_ironclads_tt
+			if = {
+				limit = {
+					calc_true_if = {
+						innovativeness = 100
+						full_idea_group = naval_ideas
+						full_idea_group = maritime_ideas
+						navy_tradition = 100
+						trade_goods_produced_amount = {
+							trade_goods = coal
+							amount = 25
+						}
+						amount = 5
+					}
+				}
+				add_treasury = -20000
+			}
+			if = {
+				limit = {
+					calc_true_if = {
+						innovativeness = 100
+						full_idea_group = naval_ideas
+						full_idea_group = maritime_ideas
+						navy_tradition = 100
+						trade_goods_produced_amount = {
+							trade_goods = coal
+							amount = 25
+						}
+						amount = 4
+					}
+				}
+				add_treasury = -30000
+			}
+			if = {
+				limit = {
+					calc_true_if = {
+						innovativeness = 100
+						full_idea_group = naval_ideas
+						full_idea_group = maritime_ideas
+						navy_tradition = 100
+						trade_goods_produced_amount = {
+							trade_goods = coal
+							amount = 25
+						}
+						amount = 3
+					}
+				}
+				add_treasury = -40000
+			}
+			else = {
+				add_treasury = -50000
+			}
+			add_country_modifier = { name = F23_ironclads_mod duration = -1 }
+		} 
 	}
 }
-
-overseas_c = {
-	slot = 3
-	generic = no
-	ai = yes
-	has_country_shield = yes
-	potential = { tag = F23 } 
-
-	F23_the_jungle_rivers = {
-		icon = mission_se_along_the_river
-		position = 12
-		required_missions = {
-			F23_safe_sarhali_seas
-			F23_steamers
-		}
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-
-	F23_halass_inrivers = {
-		icon = mission_advance_to_the_dnieper
-		position = 13
-		required_missions = {
-			F23_the_path_to_halass
-			F23_the_jungle_rivers
-		}
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-}
-
-strongbellow_c2 = {
-	slot = 3
-	generic = no
-	ai = yes
-	has_country_shield = yes
-	potential = { tag = F23 } 
-
-	F23_everything_at_our_disposal = {
-		icon = mission_rb_monopolize_the_channel
-		position = 14
-		required_missions = { F23_the_sea_hold } 
-		provinces_to_highlight = {  } 
-
-		trigger = {  } 
-
-		effect = {  } 
-	}
-}
-
-capstone = {
+capstone = { # Haven't started yet, saving for when everything is almost done.
 	slot = 3
 	generic = no
 	ai = yes
@@ -1641,17 +2889,32 @@ capstone = {
 
 	F23_center_of_the_world = {
 		icon = secure_the_republic
-		position = 15
+		position = 13
 		required_missions = {
 			F23_the_copper_seaway
-			F23_everything_at_our_disposal
-			F23_artificers_touch
-			F23_a_better_bulwar
+			F23_our_bulwar
+			F23_the_sea_hold
 		}
 		provinces_to_highlight = {  } 
 
-		trigger = {  } 
+		trigger = { 
+			1296 = { #Eborthil
+				trade_node_value = 1000
+			}
+			if = { limit = { has_dlc = "Emperor" }
+				OR = {
+					is_hegemon_of_type = naval_hegemon
+					is_hegemon_of_type = economic_hegemon
+				}
+			}
+			monthly_income = 1000
+			NOT = { any_other_great_power = { monthly_income = ROOT NOT = { tag = U17 } } }
+			navy_size = 500
+			NOT = { any_other_great_power = { num_of_heavy_ship = ROOT NOT = { tag = U17 } } }
+		} 
 
-		effect = {  } 
+		effect = {  
+			country_event = { id = flavour_ovdal_tungr.15 } # The High Seas.
+		} 
 	}
 }

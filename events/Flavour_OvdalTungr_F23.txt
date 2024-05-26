@@ -1,60 +1,5 @@
 namespace = flavour_ovdal_tungr
 
-# An offer from Ovdal Tûngr
-country_event = {
-	id = flavour_ovdal_tungr.100
-	title = flavour_ovdal_tungr.100.t
-	desc = flavour_ovdal_tungr.100.d
-	picture = BATTLE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = flavour_ovdal_tungr.100.a
-		ai_chance = { factor = 100 }
-		add_treasury = 150
-		tooltip = {
-			F23 = { vassalize = ROOT }
-		}
-		F23 = { country_event = { id = flavour_ovdal_tungr.101 } } # Positive response event.
-	}
-	option = { 
-		name = flavour_ovdal_tungr.100.b
-		ai_chance = { factor = 0 }
-		add_prestige = 10
-		F23 = { country_event = { id = flavour_ovdal_tungr.102 } } # Negative response event.
-	}
-}
-# Petty King's Response, positive response
-country_event = {
-	id = flavour_ovdal_tungr.101
-	title = flavour_ovdal_tungr.101.t
-	desc = flavour_ovdal_tungr.101.d
-	picture = BATTLE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = flavour_ovdal_tungr.101.a
-		ai_chance = { factor = 100 }
-		vassalize = U16
-	}
-}
-# Petty King's Response, negative response
-country_event = {
-	id = flavour_ovdal_tungr.102
-	title = flavour_ovdal_tungr.102.t
-	desc = flavour_ovdal_tungr.102.d
-	picture = BATTLE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = flavour_ovdal_tungr.102.a
-		ai_chance = { factor = 100 }
-		add_treasury = 150
-	}
-}
 # The Matter of Aqatbar
 country_event = {
 	id = flavour_ovdal_tungr.110
@@ -73,7 +18,6 @@ country_event = {
 			remove_core = ROOT
 		}
 		add_favors = { who = F23 amount = 20 }
-		# TODO OT, Crathanor subject MT integration
 		F23 = { country_event = { id = flavour_ovdal_tungr.111 } } # Province ownership
 	}
 	option = { 
@@ -82,7 +26,7 @@ country_event = {
 		536 = {
 			add_dwarven_minority_size_effect = yes
 			if = { limit = { NOT = { province_has_center_of_trade_of_level = 1 } } add_center_of_trade_level = 1 }
-			else = { add_treasury = 100 }
+			else = { ROOT = { add_treasury = 100 } }
 			add_trade_modifier = {
 				who = ROOT
 				duration = -1
@@ -120,9 +64,11 @@ country_event = {
 	option = { 
 		name = flavour_ovdal_tungr.111.a
 		ai_chance = { factor = 100 }
-		536 = { add_dwarven_minority_size_effect = yes }
-		if = { limit = { NOT = { province_has_center_of_trade_of_level = 1 } } add_center_of_trade_level = 1 }
-		else = { add_treasury = 100 }
+		536 = { 
+			add_dwarven_minority_size_effect = yes 
+			if = { limit = { NOT = { province_has_center_of_trade_of_level = 1 } } add_center_of_trade_level = 1 }
+			else = { ROOT = { add_treasury = 100 } }
+		}
 	}
 }
 # The Matter of Aqatbar response, trade concessions
@@ -174,13 +120,12 @@ country_event = {
 	option = { 
 		name = flavour_ovdal_tungr.120.a
 		ai_chance = { factor = 100 }
-		21 = { 
+		521 = { 
 			cede_province = F23 
 			remove_claim = ROOT
 			remove_core = ROOT
 		}
 		add_favors = { who = F23 amount = 20 }
-		# TODO OT, Crathanor subject MT integration
 		F23 = { country_event = { id = flavour_ovdal_tungr.121 } } # Province ownership
 	}
 	option = { 
@@ -189,7 +134,7 @@ country_event = {
 		521 = {
 			add_dwarven_minority_size_effect = yes
 			if = { limit = { NOT = { province_has_center_of_trade_of_level = 1 } } add_center_of_trade_level = 1 }
-			else = { add_treasury = 100 }
+			else = { ROOT = { add_treasury = 100 } }
 			add_trade_modifier = {
 				who = ROOT
 				duration = -1
@@ -227,9 +172,11 @@ country_event = {
 	option = { 
 		name = flavour_ovdal_tungr.121.a
 		ai_chance = { factor = 100 }
-		521 = { add_dwarven_minority_size_effect = yes }
-		if = { limit = { NOT = { province_has_center_of_trade_of_level = 1 } } add_center_of_trade_level = 1 }
-		else = { add_treasury = 100 }
+		521 = { 
+			add_dwarven_minority_size_effect = yes 
+			if = { limit = { NOT = { province_has_center_of_trade_of_level = 1 } } add_center_of_trade_level = 1 }
+			else = { ROOT = { add_treasury = 100 } }
+		}
 	}
 }
 # The Matter of Re-Uyel response, trade concessions
@@ -269,85 +216,6 @@ country_event = {
 		521 = { add_permanent_claim = F23 }
 	}
 }
-# Restructuring Bahar?
-country_event = {
-	id = flavour_ovdal_tungr.1
-	title = flavour_ovdal_tungr.1.t
-	desc = flavour_ovdal_tungr.1.d
-	picture = BATTLE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = flavour_ovdal_tungr.1.a
-		ai_chance = { factor = 100 }
-		every_subject_country = {
-			limit = {
-				NOT = { tag = U17 }
-				capital_scope = { OR = { region = bahar_region region = ourdia_region } }
-				ai = yes
-			}
-			U17 = { inherit = PREV } # TODO OT, make sure this works.
-
-		}
-	}
-	option = { 
-		name = flavour_ovdal_tungr.1.b
-		ai_chance = { factor = 100 }
-	}
-}
-# A Question of Allegiance (Baharkand Outreach)
-country_event = {
-	id = flavour_ovdal_tungr.130
-	title = flavour_ovdal_tungr.130.t
-	desc = flavour_ovdal_tungr.130.d
-	picture = BATTLE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = flavour_ovdal_tungr.130.a
-		ai_chance = { factor = 100 }
-		tooltip = {
-			F23 = { vassalize = ROOT } 
-		}
-		F23 = { country_event = { id = flavour_ovdal_tungr.131 } } # Positive response
-	}
-	option = { 
-		name = flavour_ovdal_tungr.130.b
-		ai_chance = { factor = 0 }
-		F23 = { country_event = { id = flavour_ovdal_tungr.132 } } # Negative response
-	}
-}
-# A Question of Allegiance, positive response
-country_event = {
-	id = flavour_ovdal_tungr.131
-	title = flavour_ovdal_tungr.131.t
-	desc = flavour_ovdal_tungr.131.d
-	picture = BATTLE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = flavour_ovdal_tungr.131.a
-		ai_chance = { factor = 100 }
-		F23 = { vassalize = U19 } 
-	}
-}
-# A Question of Allegiance, negative response
-country_event = {
-	id = flavour_ovdal_tungr.132
-	title = flavour_ovdal_tungr.132.t
-	desc = flavour_ovdal_tungr.132.d
-	picture = BATTLE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = flavour_ovdal_tungr.132.a
-		ai_chance = { factor = 100 }
-	}
-}
 # Dwarves and Humans, United
 country_event = {
 	id = flavour_ovdal_tungr.140
@@ -373,7 +241,7 @@ country_event = {
 
 	}
 	option = { 
-		name = flavour_ovdal_tungr.140.a
+		name = flavour_ovdal_tungr.140.b
 		ai_chance = { factor = 0 }
 
 		largest_increase_of_dwarven_tolerance_effect = yes
@@ -383,6 +251,8 @@ country_event = {
 		}
 
 		F23 = { country_event = { id = flavour_ovdal_tungr.142 } } # Republics United
+		F23 = { add_country_modifier = { name = F23_copper_ilatani_cooperation duration = -1 } }
+		U17 = { add_country_modifier = { name = F23_copper_ilatani_cooperation duration = -1 } }
 	}
 }
 # Dwarves and Humans, United, vassalage
@@ -399,12 +269,29 @@ country_event = {
 		ai_chance = { factor = 100 }
 
 		vassalize = U17
+		U17 = { add_country_modifier = { name = F23_loyal_crathanor_subject duration = -1 } }
 		largest_increase_of_human_tolerance_effect = yes
 		526 = {
 			add_human_minority_size_effect = yes
 			add_human_minority_size_effect = yes
 		}
-		# TODO OT, Crathanor mission integration
+		custom_tooltip = F23_crathanor_missions_1
+		hidden_effect = {
+			U17 = {
+				complete_mission = crathanor_no_representation
+				complete_mission = crathanor_no_taxation
+				if = { limit = { NOT = { mission_completed = crathanor_embrace_the_two_principles } }
+					complete_mission = crathanor_embrace_the_two_principles
+					country_event = { id = flavor_crathanor.1 }
+				}
+				complete_mission = crathanor_our_first_friends
+				complete_mission = crathanor_not_your_mountains
+				complete_mission = crathanor_together_we_rise
+				bahar_region = { add_permanent_claim = U17 }
+				complete_mission = crathanor_end_noble_republic
+				generic_start_expulsion = { race = goblin }
+			}
+		}
 	}
 }
 # Dwarves and Humans, United, friendship
@@ -429,25 +316,28 @@ country_event = {
 }
 # Tugged Two Ways
 country_event = {
-	id = flavour_ovdal_tungr.2
-	title = flavour_ovdal_tungr.2.t
-	desc = flavour_ovdal_tungr.2.d
+	id = flavour_ovdal_tungr.0
+	title = flavour_ovdal_tungr.0.t
+	desc = flavour_ovdal_tungr.0.d
 	picture = BATTLE_eventPicture
 	
 	is_triggered_only = yes
 	
 	option = { 
-		name = flavour_ovdal_tungr.2.a
+		name = flavour_ovdal_tungr.0.a
 		ai_chance = { factor = 100 }
 		add_country_modifier = { name = F23_naval_morale_buff duration = 3650 }
 		isle_of_tef_area = {
 			add_permanent_claim = ROOT
 		}
+		unlock_government_reform = { government_reform = F23_the_port_hold }
+		change_government_reform_progress = 50
+
 		custom_tooltip = F23_tugged_two_ways_tt
 	}
 }
-# Sweetport event
-province_event  = {
+# Copper needed for Sheathing
+country_event  = {
 	id = flavour_ovdal_tungr.3
 	title = flavour_ovdal_tungr.3.t
 	desc = flavour_ovdal_tungr.3.d
@@ -456,47 +346,36 @@ province_event  = {
 	is_triggered_only = yes
 	
 	immediate = {
-		hidden_effect = {
-			export_to_variable = {
-				variable_name = sweetport_culture
-				value = culture
-			}
-		}
-
+		
 	}
 
 	option = { 
 		name = flavour_ovdal_tungr.3.a
 		ai_chance = { factor = 100 }
 
-		add_dwarven_minority_size_effect = yes
-		owner = { add_accepted_culture = variable:sweetport_culture }
-	}
-}
-# The Cloves Monopoly
-country_event = {
-	id = flavour_ovdal_tungr.4
-	title = flavour_ovdal_tungr.4.t
-	desc = flavour_ovdal_tungr.4.d
-	picture = BATTLE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { 
-		name = flavour_ovdal_tungr.4.a
-		ai_chance = { factor = 100 }
-
-		change_price = {
-			trade_goods = cloves
-			key = F23_clove_monopoly
-			
-			value = 0.2
-			duration = -1
+		custom_tooltip = flavour_ovdal_tungr.3_tooltip
+		hidden_effect = {
+			bulwar_superregion = { limit = { trade_goods = copper }
+				if = { limit = { trade_goods = copper}
+					add_permanent_province_modifier = { name = F23_copper_sheathing_price_increase duration = -1 }
+				}
+			}
+			businor_region = { limit = { trade_goods = copper }
+				if = { limit = { trade_goods = copper}
+					add_permanent_province_modifier = { name = F23_copper_sheathing_price_increase duration = -1 }
+				}
+			}
+			east_dameshead_region = { limit = { trade_goods = copper }
+				if = { limit = { trade_goods = copper}
+					add_permanent_province_modifier = { name = F23_copper_sheathing_price_increase duration = -1 }
+				}
+			}
 		}
-
 	}
 }
-# Non-Emperor secondary hegemony
+# id 4, available.
+
+# A Discovery
 country_event = {
 	id = flavour_ovdal_tungr.5
 	title = flavour_ovdal_tungr.5.t
@@ -509,13 +388,19 @@ country_event = {
 		name = flavour_ovdal_tungr.5.b
 		ai_chance = { factor = 100 }
 
-		add_country_modifier = { name = F23_secondary_hegemony_eco_1 duration = -1 }
-	}
-	option = { 
-		name = flavour_ovdal_tungr.5.c
-		ai_chance = { factor = 100 }
-
-		add_country_modifier = { name = F23_secondary_hegemony_naval_1 duration = -1 }
+		hidden_effect = {
+			set_country_flag = F23_MT_unlock_grudge
+		}
+		4124 = {
+			owner = {
+				reverse_add_casus_belli = {
+					target = ROOT
+					type = cb_insult
+					months = 240
+				}
+			}
+		}
+		swap_non_generic_missions = yes
 	}
 }
 # A Grudge Righted
@@ -531,14 +416,15 @@ country_event = {
 		name = flavour_ovdal_tungr.6.a
 		ai_chance = { factor = 100 }
 
-		add_power_projection = { amount = 15 }
+		add_power_projection = { type = mission_rewards_power_projection amount = 15 }
 
 		4124 = {
-			add_devastation = 30
+			add_devastation = 50
 			province_event = { id = diggy.13 }
 		}
 	}
 }
+
 # The Arrival of Grun Strongbellow
 country_event = {
 	id = flavour_ovdal_tungr.7
@@ -546,38 +432,482 @@ country_event = {
 	desc = flavour_ovdal_tungr.7.d
 	picture = BATTLE_eventPicture
 	
-	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		tag = F23
+		OR = {
+			is_year = 1500
+			AND = {
+				is_year = 1495
+				innovativeness = 10
+			}
+			AND = {
+				is_year = 1490
+				innovativeness = 20
+			}
+			AND = {
+				is_year = 1485
+				innovativeness = 30
+			}
+			AND = {
+				is_year = 1480
+				innovativeness = 40
+			}
+			AND = {
+				is_year = 1475
+				innovativeness = 50
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
 	
 	option = { 
-		name = flavour_ovdal_tungr.11.a
+		name = flavour_ovdal_tungr.7.a
 		ai_chance = { factor = 100 }
 		add_historical_friend = A73
 		add_accepted_culture = silver_dwarf
-		custom_tooltip = F23_silver_dwarf_no_slot_taken
-		define_advisor = {
-			type = fortification_expert
-			name = "Grun Strongbellow"
-			skill = 2
-			culture = silver_dwarf
-			religion = regent_court
-			discount = yes
+		add_country_modifier = { name = F23_grun_strongbellow duration = -1 }
+
+		hidden_effect = {
+			country_event = {
+				id = flavour_ovdal_tungr.8
+				days = 7300
+			}
 		}
 	}
 }
-# Copper Offer handler event
-province_event = {
+
+# The Departure of Grun Strongbellow
+country_event = {
+	id = flavour_ovdal_tungr.8
+	title = flavour_ovdal_tungr.8.t
+	desc = flavour_ovdal_tungr.8.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = flavour_ovdal_tungr.8.a
+		ai_chance = { factor = 100 }
+		remove_country_modifier = F23_grun_strongbellow 
+
+		hidden_effect = { set_country_flag = F23_MT_unlock_strongbellow_society }
+		swap_non_generic_missions = yes
+	}
+}
+
+# Steam Curios
+country_event = {
+	id = flavour_ovdal_tungr.9
+	title = flavour_ovdal_tungr.9.t
+	desc = flavour_ovdal_tungr.9.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = { 526 = { add_province_modifier = { name = F23_steam_curios duration = -1 } } }
+	}
+	
+	option = { 
+		name = flavour_ovdal_tungr.9.a
+		ai_chance = { factor = 100 }
+		tooltip = {
+			526 = { add_province_modifier = { name = F23_steam_curios duration = -1 } }
+		}
+	}
+}
+
+# The High Seas, capstone event
+country_event = {
+	id = flavour_ovdal_tungr.15
+	title = flavour_ovdal_tungr.15.t
+	desc = flavour_ovdal_tungr.15.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = flavour_ovdal_tungr.15.a
+		ai_chance = { factor = 100 }
+		if = { limit = { has_dlc = "Emperor" }
+			if = { limit = { is_hegemon_of_type = naval_hegemon }
+				add_country_modifier = { name = F23_secondary_hegemony_eco duration = -1 }
+			}
+			else = {
+				add_country_modifier = { name = F23_secondary_hegemony_naval duration = -1 }
+			}
+		}
+		else = {
+			add_country_modifier = { name = F23_maritime_hegemony duration = -1 }
+		}
+		custom_tooltip = F23_capstone_sea_hold_upgrade
+	}
+}
+
+
+# Sunken City of Barzisah
+country_event = {
 	id = flavour_ovdal_tungr.20
 	title = flavour_ovdal_tungr.20.t
 	desc = flavour_ovdal_tungr.20.d
 	picture = BATTLE_eventPicture
 	
 	is_triggered_only = yes
+
+	immediate = {
+		add_prestige = 10
+	}
+
+	option = { # Yametses
+		trigger = { NOT = { has_country_flag = F23_explorers_yametses } }
+		name = flavour_ovdal_tungr.20.a
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.21 days = 730 }
+	}
+	
+	option = { # Pasah
+		trigger = { NOT = { has_country_flag = F23_explorers_pasah } }
+		name = flavour_ovdal_tungr.20.b
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.22 days = 730 }
+	}
+	
+	option = { # Pir Ail
+		trigger = { NOT = { has_country_flag = F23_explorers_pir_ail } }
+		name = flavour_ovdal_tungr.20.c
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.23 days = 730 }
+	}
+}
+# Explorers of the Depths, Yametses
+country_event = {
+	id = flavour_ovdal_tungr.21
+	title = flavour_ovdal_tungr.21.t
+	desc = flavour_ovdal_tungr.21.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = { set_country_flag = F23_explorers_yametses }
+		add_prestige = 5
+	}
+
+	option = { # Pasah
+		trigger = { NOT = { has_country_flag = F23_explorers_pasah } }
+		name = flavour_ovdal_tungr.20.b
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.22 days = 730 }
+	}
+	
+	option = { # Pir Ail
+		trigger = { NOT = { has_country_flag = F23_explorers_pir_ail } }
+		name = flavour_ovdal_tungr.20.c
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.23 days = 730 }
+	}
+	
+	option = { # Deeper depths
+		trigger = { has_country_flag = F23_explorers_yametses has_country_flag = F23_explorers_pasah has_country_flag = F23_explorers_pir_ail }
+		name = flavour_ovdal_tungr.20.e
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.25 days = 730 }
+	}
+}
+# Explorers of the Depths, Pasah
+country_event = {
+	id = flavour_ovdal_tungr.22
+	title = flavour_ovdal_tungr.22.t
+	desc = flavour_ovdal_tungr.22.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = { set_country_flag = F23_explorers_pasah }
+		add_prestige = 5		
+	}
+
+	option = { # Yametses
+		trigger = { NOT = { has_country_flag = F23_explorers_yametses } }
+		name = flavour_ovdal_tungr.20.a
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.21 days = 730 }
+	}
+		
+	option = { # Pir Ail
+		trigger = { NOT = { has_country_flag = F23_explorers_pir_ail } }
+		name = flavour_ovdal_tungr.20.c
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.23 days = 730 }
+	}
+	
+	option = { # Deeper depths
+		trigger = { has_country_flag = F23_explorers_yametses has_country_flag = F23_explorers_pasah has_country_flag = F23_explorers_pir_ail }
+		name = flavour_ovdal_tungr.20.e
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.25 days = 730 }
+	}
+}
+# Explorers of the Depths, Pir Ail
+country_event = {
+	id = flavour_ovdal_tungr.23
+	title = flavour_ovdal_tungr.23.t
+	desc = flavour_ovdal_tungr.23.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = { set_country_flag = F23_explorers_pir_ail }
+		add_prestige = 5
+	}
+
+	option = { # Yametses
+		trigger = { NOT = { has_country_flag = F23_explorers_yametses } }
+		name = flavour_ovdal_tungr.20.a
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.21 days = 730 }
+	}
+	
+	option = { # Pasah
+		trigger = { NOT = { has_country_flag = F23_explorers_pasah } }
+		name = flavour_ovdal_tungr.20.b
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.22 days = 730 }
+	}
+		
+	option = { # Deeper depths
+		trigger = { has_country_flag = F23_explorers_yametses has_country_flag = F23_explorers_pasah has_country_flag = F23_explorers_pir_ail }
+		name = flavour_ovdal_tungr.20.e
+		ai_chance = { factor = 100 }
+		country_event = { id = flavour_ovdal_tungr.25 days = 730 }
+	}
+}
+
+# Deeper Depths
+country_event = {
+	id = flavour_ovdal_tungr.25
+	title = flavour_ovdal_tungr.25.t
+	desc = flavour_ovdal_tungr.25.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = flavour_ovdal_tungr.25.a
+		ai_chance = { factor = 100 }
+		set_country_flag = F23_mt_unlock_strongbellow_2
+		swap_non_generic_missions = yes
+	}
+}
+
+
+# Depths of the Divenhal
+country_event = {
+	id = flavour_ovdal_tungr.30
+	title = flavour_ovdal_tungr.30.t
+	desc = flavour_ovdal_tungr.30.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
 	
 	option = { 
-		name = flavour_ovdal_tungr.20.a
+		name = flavour_ovdal_tungr.30.a
+		ai_chance = { factor = 100 }
+
+		country_event = { id = flavour_ovdal_tungr.31 days = 730 }
+	}
+}
+country_event = {
+	id = flavour_ovdal_tungr.31
+	title = flavour_ovdal_tungr.31.t
+	desc = flavour_ovdal_tungr.31.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.31.a
+		ai_chance = { factor = 100 }
+
+		country_event = { id = flavour_ovdal_tungr.32 days = 730 }
+	}
+}
+country_event = {
+	id = flavour_ovdal_tungr.32
+	title = flavour_ovdal_tungr.32.t
+	desc = flavour_ovdal_tungr.32.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.32.a
+		ai_chance = { factor = 100 }
+
+		country_event = { id = flavour_ovdal_tungr.33 days = 730 }
+	}
+}
+country_event = {
+	id = flavour_ovdal_tungr.33
+	title = flavour_ovdal_tungr.33.t
+	desc = flavour_ovdal_tungr.33.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.33.a
+		ai_chance = { factor = 100 }
+
+		country_event = { id = flavour_ovdal_tungr.34 days = 730 }
+	}
+}
+country_event = {
+	id = flavour_ovdal_tungr.34
+	title = flavour_ovdal_tungr.34.t
+	desc = flavour_ovdal_tungr.34.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.34.a
+		ai_chance = { factor = 100 }
+
+		set_country_flag = F23_mt_unlock_strongbellow_3
+		swap_non_generic_missions = yes
+	}
+}
+
+# The Dredging
+country_event = {
+	id = flavour_ovdal_tungr.40
+	title = flavour_ovdal_tungr.40.t
+	desc = flavour_ovdal_tungr.40.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.40.a
 		ai_chance = { factor = 100 }
 	}
 }
+
+country_event = {
+	id = flavour_ovdal_tungr.41
+	title = flavour_ovdal_tungr.41.t
+	desc = flavour_ovdal_tungr.41.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.41.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = {
+	id = flavour_ovdal_tungr.42
+	title = flavour_ovdal_tungr.42.t
+	desc = flavour_ovdal_tungr.42.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.42.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = {
+	id = flavour_ovdal_tungr.43
+	title = flavour_ovdal_tungr.43.t
+	desc = flavour_ovdal_tungr.43.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.43.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = {
+	id = flavour_ovdal_tungr.44
+	title = flavour_ovdal_tungr.44.t
+	desc = flavour_ovdal_tungr.44.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.44.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = {
+	id = flavour_ovdal_tungr.45
+	title = flavour_ovdal_tungr.45.t
+	desc = flavour_ovdal_tungr.45.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = { 
+		name = flavour_ovdal_tungr.45.a
+		ai_chance = { factor = 100 }
+
+		if = {
+			limit = { has_dlc = "Rule Britannia" }
+			custom_tooltip = even_earlier_coal_available
+		}
+
+	}
+}
+
+
+
+
+
+
+
+## Copper Offer handler event
+#province_event = {
+#	id = flavour_ovdal_tungr.20
+#	title = flavour_ovdal_tungr.20.t
+#	desc = flavour_ovdal_tungr.20.d
+#	picture = BATTLE_eventPicture
+#	
+#	is_triggered_only = yes
+#	
+#	option = { 
+#		name = flavour_ovdal_tungr.20.a
+#		ai_chance = { factor = 100 }
+#	}
+#}
 # Sea Hold main menu
 country_event = {
 	id = flavour_ovdal_tungr.50
@@ -639,10 +969,12 @@ country_event = {
 			has_country_flag = F23_sea_hold_active
 			NOT = { has_country_flag = F23_sea_hold_docked_country }
 			NOT = {
-				num_of_galley = 1
-				NOT = { num_of_galley = 2 }
-				any_owned_province = {
-					galleys_in_province	= 1
+				AND = {
+					num_of_galley = 1
+					NOT = { num_of_galley = 2 }
+					any_owned_province = {
+						galleys_in_province	= 1
+					}
 				}
 			}
 		}
@@ -682,10 +1014,6 @@ country_event = {
 
 		name = flavour_ovdal_tungr.50.cannot_permadock
 		ai_chance = { factor = 100 }
-
-		hidden_effect = {
-			F23_sea_hold_permadock_effect = yes
-		}
 	}
 
 	# Design
@@ -755,12 +1083,6 @@ country_event = {
 		}
 	}
 
-	# Launch
-	option = { 
-		name = flavour_ovdal_tungr.50.exit
-		ai_chance = { factor = 100 }
-	}
-
 	# Pity (also, testing)
 	option = {
 		trigger = {
@@ -785,12 +1107,18 @@ country_event = {
 			# TODO OT, hide until the proper mission has been completed.
 			any_owned_province = { has_province_flag = F23_sea_hold_permanently_docked }
 		}
-		name = flavour_ovdal_tungr.50.exit
+		name = flavour_ovdal_tungr.50.reapply
 		ai_chance = { factor = 100 }
+		custom_tooltip = F23_sea_hold_reapply_tt
 
 		F23_sea_hold_permadock_reapply_effect_country = yes
 	}
 
+	# Exit.
+	option = { 
+		name = flavour_ovdal_tungr.50.exit
+		ai_chance = { factor = 100 }
+	}
 }
 
 # Design sub-menu.
@@ -887,7 +1215,7 @@ country_event = {
 	option = { 
 		trigger = { 
 			F23_sea_hold_design_modification_trigger = { enable = yes modification = gyrocopter_bay } 
-			mission_completed = F23_artificers_touch
+			# mission_completed = F23_artificers_touch
 		}
 		F23_sea_hold_design_modification_effect = { enable = yes modification = gyrocopter_bay }
 
@@ -899,7 +1227,7 @@ country_event = {
 	option = { 
 		trigger = { 
 			F23_sea_hold_design_modification_trigger = { disable = yes modification = gyrocopter_bay } 
-			mission_completed = F23_artificers_touch
+			# mission_completed = F23_artificers_touch
 		}
 		F23_sea_hold_design_modification_effect = { disable = yes modification = gyrocopter_bay }
 
@@ -911,7 +1239,7 @@ country_event = {
 	option = { 
 		trigger = { 
 			F23_sea_hold_design_modification_trigger = { maxed = yes modification = gyrocopter_bay } 
-			mission_completed = F23_artificers_touch
+			# mission_completed = F23_artificers_touch
 		}
 		F23_sea_hold_design_modification_effect = { maxed = yes modification = gyrocopter_bay }
 

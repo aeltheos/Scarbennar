@@ -1314,7 +1314,160 @@ mission_faction_trigger = {
     }
 }
 
-<<<<<<< HEAD
+# Ovdal Tungr
+F23_owned_by_friendly_nation = { # Province scope
+	custom_trigger_tooltip = {
+		tooltip = F23_coop_owned
+		OR = {
+			owned_by = F23
+			owned_by_subject_of = F23
+			AND = {
+				OR = {
+					owned_by = U17
+					owned_by_subject_of = U17
+				}
+				U17 = { alliance_with = F23 }
+			}
+		}
+	}
+}
+F23_extending_our_reach_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = F23_extending_our_reach_trigger_tt
+		any_trade_node_member_province = { 
+			has_terrain = coastline
+			F23_owned_by_friendly_nation = yes
+			has_shipyard_building_trigger = yes
+			num_free_building_slots = 1
+		}
+	}
+}
+F23_trade_node_requirements = {
+	calc_true_if = {
+		all_trade_node_member_province = {
+			owned_by = ROOT
+			if = {
+				limit = { has_dlc = "Leviathan" } 
+				num_of_times_expanded_infrastructure = $expand_infra_req$
+			}
+			else = {
+				development = 30
+			}
+			if = {
+				limit = { has_dlc = "Dharma" } 
+				province_has_center_of_trade_of_level = 3
+			}
+			else = {
+				province_has_center_of_trade_of_level = 1
+			}
+			heavy_ships_in_province = $heavy_ship_num$
+		}
+		amount = 1
+	}
+}
+F23_bulwar_province_triggers = {
+	OR = {
+		owner = {
+			if = {
+				limit = { is_subject = yes NOT = { is_subject_of_type = tributary_state } }
+				overlord = { has_spy_network_from = { who = ROOT value = 30 } }
+			}
+			else = { has_spy_network_from = { who = ROOT value = 30 } }
+		}
+		owner = {
+			if = {
+				limit = { is_subject = yes NOT = { is_subject_of_type = tributary_state } }
+				overlord = { has_opinion = { who = ROOT value = 100 } }
+			}
+			else = { has_opinion = { who = ROOT value = 100 } }
+		}
+		F23_owned_by_friendly_nation = yes
+	}
+}
+F23_encouraging_excess_trigger = {
+	OR = {
+		artist = 3
+		philosopher = 3
+	}
+	OR = {
+		diplomatic_reputation = 4
+		custom_trigger_tooltip = {
+			tooltip = F23_encouraging_excess_magical_feast
+			OR = {
+				has_country_modifier = magic_estate_magnificent_feast_1
+				has_country_modifier = magic_estate_magnificent_feast_2
+				has_country_modifier = magic_estate_magnificent_feast_3
+			}
+		}
+	}
+	custom_trigger_tooltip = {
+		tooltip = F23_encouraging_excess_trigger_tt
+		NOT = {
+			any_known_country = {
+				NOT = { tag = U17 }
+				capital_scope = {
+					superregion = bulwar_superregion
+				}
+				prestige = ROOT
+			}
+		}
+	}
+	treasury = 1000
+}
+F23_make_the_copper_offer_trigger = {
+	if = { limit = { $prov_num$ = { NOT = { has_province_flag = F23_copper_offer_made } } }
+		custom_trigger_tooltip = {
+			tooltip = F23_copper_offer_trigger_tooltip
+			$prov_num$ = { 
+				NOT = { owns_or_subject_of = yes }
+				owner = {
+					if = { limit = { is_subject = no }
+						has_opinion = { who = ROOT value = 100 }
+					}
+					else = {
+						overlord = { has_opinion = { who = ROOT value = 100 } }
+					}
+				}
+			}
+		}
+	}
+	else = {
+		always = no
+	}
+}
+
+# Sea Hold design.
+F23_sea_hold_design_modification_trigger = {
+	[[enable]
+		NOT = { has_country_flag = F23_sea_hold_$modification$_enabled }
+		check_variable = { which = F23_sea_hold_var_modifications_available value = 1 }
+		check_variable = { which = F23_sea_hold_var_total_slots_available value = 1 }				
+	]
+	[[disable]
+		has_country_flag = F23_sea_hold_$modification$_enabled
+	]	
+	[[maxed]
+		NOT = { has_country_flag = F23_sea_hold_$modification$_enabled }
+		OR = {
+			NOT = { check_variable = { which = F23_sea_hold_var_modifications_available value = 1 } }
+			NOT = { check_variable = { which = F23_sea_hold_var_total_slots_available value = 1 }	}
+		}
+	]
+}
+F23_sea_hold_design_module_trigger = {
+	[[enable]
+		NOT = { has_country_flag = F23_sea_hold_$module$_enabled }
+		check_variable = { which = F23_sea_hold_var_total_slots_available value = 1 }				
+	]
+	[[disable]
+		has_country_flag = F23_sea_hold_$module$_enabled
+	]	
+	[[maxed]
+		NOT = { has_country_flag = F23_sea_hold_$module$_enabled }
+		NOT = { check_variable = { which = F23_sea_hold_var_total_slots_available value = 1 }	}
+	]
+}
+
 argordstun_roughness_100 = {
 	has_government_power = {
 		mechanic_type = argordstun_roughness_mechanic
@@ -1389,46 +1542,5 @@ thirabnir_mission = {
 	custom_trigger_tooltip = {
 		tooltip = thangoya_thirabnir_mission_tt
 		has_country_modifier = thangoya_thirabnir_ruler
-	}
-}
-
-# Ovdal Tungr
-F23_owned_by_friendly_nation = {
-	custom_trigger_tooltip = {
-		tooltip = F23_friendly_nation_owned_threshold_$trust_threshold$
-		owner = {
-			OR = {
-				tag = ROOT
-				overlord_of = ROOT
-				is_subject_of = ROOT
-				AND = {
-					alliance_with = ROOT
-					OR = {
-						tag = U17
-						trust = {
-							who = ROOT
-							value = $trust_threshold$
-						}
-					}
-				}
-				overlord = {
-					OR = {
-						is_subject_of = ROOT
-						alliance_with = ROOT
-						AND = {
-							alliance_with = ROOT
-							OR = {
-								tag = U17
-								trust = {
-									who = ROOT
-									value = $trust_threshold$
-								}
-							}
-						}
-						
-					}
-				}
-			}
-		}
 	}
 }
