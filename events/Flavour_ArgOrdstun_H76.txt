@@ -148,7 +148,7 @@ country_event = {
 	is_triggered_only = yes
 
 	option = {
-		name = flavour_ordstun.6.a
+		name = flavour_ordstun.5.a
 		add_manpower = -0.5
 		526 = { #Ovdal-Tungr
 			add_base_manpower = -1
